@@ -18,7 +18,7 @@ Este projeto foi construído inteiro em conversa com IA, e faz sentido dizer iss
 O fluxo foi em três etapas, cada uma com um papel diferente:
 
 1. **Direção humana:** a ideia, a escolha do problema a resolver, os critérios de "isso é útil de verdade?" e cada decisão de produto (nome, escopo, o que fica de fora) partiram de mim.
-2. **Claude, como designer:** recebeu um briefing e devolveu o [documento de design](docs/design.md): paleta com contraste verificado, escala tipográfica, todos os estados de cada tela, o texto exato de cada botão, o modelo de dados e o layout do PDF. Nenhuma decisão visual ficou em aberto.
+2. **Claude, como designer:** recebeu um briefing e devolveu um documento de design fechado: paleta com contraste verificado, escala tipográfica, todos os estados de cada tela, o texto exato de cada botão, o modelo de dados e o layout do PDF. Nenhuma decisão visual ficou em aberto.
 3. **Claude Code, como implementação:** traduziu esse documento em código, rodou o app, testou os fluxos e corrigiu o que quebrou. Onde o documento não cabia na realidade (a escala tipográfica não servia numa tela de 375px), o ajuste está comentado no código com o motivo.
 
 O que isso **não** significa: não é código gerado às cegas e colado. Cada decisão de arquitetura tem uma razão registrada: o cronômetro deriva o tempo de `started_at` em vez de acumular por tick, a tarifa fica congelada no registro, os textos de licença são gerados a partir dos arquivos originais em vez de transcritos. A seção [Decisões de implementação](#decisões-de-implementação) existe justamente para isso.
@@ -52,7 +52,7 @@ O APK de debug sai em `android/app/build/outputs/apk/debug/app-debug.apk`. Copie
 Para um APK assinado, de release:
 
 ```bash
-keytool -genkey -v -keystore horas.keystore -alias horas -keyalg RSA -keysize 2048 -validity 10000
+keytool -genkey -v -keystore ponto.keystore -alias ponto -keyalg RSA -keysize 2048 -validity 10000
 ```
 
 Guarde o `.keystore` e a senha: sem eles não dá para publicar atualizações do mesmo app. Depois configure `android/keystore.properties` e rode `cd android && gradlew.bat assembleRelease`.
