@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "dev.micio.horas"
+    namespace "dev.micio.ponto"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "dev.micio.horas"
+        applicationId "dev.micio.ponto"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

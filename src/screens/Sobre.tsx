@@ -29,7 +29,7 @@ export function Sobre({
           }}
         >
           <AppMark />
-          <h2 className="t-h1">Horas</h2>
+          <h2 className="t-h1">Ponto</h2>
           <p className="t-body c-2" style={{ textAlign: 'center', maxWidth: '32ch' }}>
             Controle de tempo para freelancers.
           </p>
@@ -41,7 +41,7 @@ export function Sobre({
         <button type="button" className="setting-row" onClick={onLicenses}>
           <span className="col grow">
             <span className="t-body">Licenças</span>
-            <span className="t-caption c-3">Os projetos de código aberto que o Horas usa.</span>
+            <span className="t-caption c-3">Os projetos de código aberto que o Ponto usa.</span>
           </span>
           <ChevronRight size={20} className="c-3" aria-hidden="true" />
         </button>
@@ -67,7 +67,7 @@ function AppMark() {
       height="72"
       viewBox="0 0 72 72"
       role="img"
-      aria-label="Marca do Horas"
+      aria-label="Marca do Ponto"
       style={{ borderRadius: 18, background: 'var(--bg)', border: '1px solid var(--line)' }}
     >
       <circle cx="36" cy="26" r="5" fill="var(--amber-fill)" />

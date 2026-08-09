@@ -1,4 +1,4 @@
-# Horas
+# Ponto
 
 Controle de tempo para freelancers. Cronômetro que vira dinheiro: aperta play quando começa, aperta de novo quando para, e no fim do mês sai um PDF sóbrio para mandar junto da cobrança.
 
@@ -7,6 +7,24 @@ Tudo fica no celular. Sem servidor, sem login, sem internet.
 - **Stack:** React 18 + TypeScript + Vite, empacotado com Capacitor 7
 - **Plataformas:** Android (pronto), iOS (mesmo código, falta só compilar num Mac)
 - **Design:** implementação literal de [`docs/design.md`](docs/design.md)
+
+O nome vem do "bater ponto" — e do ícone, que são literalmente os dois pontos de um relógio digital.
+
+---
+
+## Feito com IA (vibe coding)
+
+Este projeto foi construído inteiro em conversa com IA, e faz sentido dizer isso em voz alta porque o método aparece no resultado.
+
+O fluxo foi em três etapas, cada uma com um papel diferente:
+
+1. **Direção humana** — a ideia, a escolha do problema a resolver, os critérios de "isso é útil de verdade?" e cada decisão de produto (nome, escopo, o que fica de fora) partiram de mim.
+2. **Claude, como designer** — recebeu um briefing e devolveu o [documento de design](docs/design.md): paleta com contraste verificado, escala tipográfica, todos os estados de cada tela, o texto exato de cada botão, o modelo de dados e o layout do PDF. Nenhuma decisão visual ficou em aberto.
+3. **Claude Code, como implementação** — traduziu esse documento em código, rodou o app, testou os fluxos e corrigiu o que quebrou. Onde o documento não cabia na realidade (a escala tipográfica não servia numa tela de 375px), o ajuste está comentado no código com o motivo.
+
+O que isso **não** significa: não é código gerado às cegas e colado. Cada decisão de arquitetura tem uma razão registrada — o cronômetro deriva o tempo de `started_at` em vez de acumular por tick, a tarifa fica congelada no registro, os textos de licença são gerados a partir dos arquivos originais em vez de transcritos. A seção [Decisões de implementação](#decisões-de-implementação) existe justamente para isso.
+
+Vibe coding não é abrir mão do critério. É mover o critério do "como escrever" para o "o que construir e por quê".
 
 ---
 
@@ -100,7 +118,7 @@ Onde o documento de design deixou espaço técnico, estas foram as escolhas — 
 
 ## Licença
 
-O Horas é [MIT](LICENSE) — pode usar, modificar e distribuir, inclusive comercialmente, mantendo o aviso de copyright.
+O Ponto é [MIT](LICENSE) — pode usar, modificar e distribuir, inclusive comercialmente, mantendo o aviso de copyright.
 
 As dependências que vão dentro do APK são MIT, ISC e OFL-1.1 (as três fontes). Os avisos e textos completos ficam na tela **Ajustes → Sobre → Licenças** do app, gerada a partir dos arquivos `LICENSE` reais:
 

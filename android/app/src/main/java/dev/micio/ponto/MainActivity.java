@@ -1,4 +1,4 @@
-package dev.micio.horas;
+package dev.micio.ponto;
 
 import com.getcapacitor.BridgeActivity;
 

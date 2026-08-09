@@ -1,4 +1,6 @@
-# Horas — Documento Base de Design
+# Ponto — Documento Base de Design
+
+> **Nota de implementação:** este documento foi escrito usando "Horas" como nome de trabalho e propôs alternativas na §1. A escolhida foi **Ponto** — pelo duplo sentido de "bater ponto" e por amarrar com o ícone, que são literalmente dois pontos. Onde o texto diz "Horas" como marca, leia "Ponto"; onde diz "horas" como unidade de tempo, continua valendo.
 
 > Especificação de design para implementação. Plataforma: Android (primeiro) e iOS via Capacitor — React + Vite + TypeScript em WebView. Interface em Português do Brasil. App local, sem servidor, offline-first.
 >

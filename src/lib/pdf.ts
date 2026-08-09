@@ -265,7 +265,7 @@ function drawFooters(doc: jsPDF, model: ReportModel) {
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(9)
     doc.setTextColor(MUTED.r, MUTED.g, MUTED.b)
-    doc.text(`Gerado por Horas · ${model.generatedAt}`, MARGIN, PAGE_H - 12)
+    doc.text(`Gerado por Ponto · ${model.generatedAt}`, MARGIN, PAGE_H - 12)
     doc.text(`Página ${i} de ${pages}`, PAGE_W - MARGIN, PAGE_H - 12, { align: 'right' })
   }
 }
@@ -315,5 +315,5 @@ export function pdfFileName(clientName: string, periodLabel: string): string {
       .replace(/[^a-zA-Z0-9]+/g, '-')
       .replace(/(^-|-$)/g, '')
       .toLowerCase()
-  return `horas-${slug(clientName)}-${slug(periodLabel)}.pdf`
+  return `ponto-${slug(clientName)}-${slug(periodLabel)}.pdf`
 }

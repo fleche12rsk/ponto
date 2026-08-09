@@ -11,7 +11,7 @@ import { EMPTY_DB, DEFAULT_SETTINGS, type Database } from './types'
  * complexidade de um SQLite para o v1.
  */
 
-const KEY = 'horas.db.v1'
+const KEY = 'ponto.db.v1'
 
 /** Serializa gravações para que dois saves concorrentes não se sobrescrevam. */
 let writeChain: Promise<void> = Promise.resolve()

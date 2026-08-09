@@ -75,7 +75,7 @@ export function Relatorio({
       await shareCsv(
         csv,
         pdfFileName(model.clientName, model.periodLabel).replace(/\.pdf$/, '.csv'),
-        `Horas — ${model.clientName}`,
+        `Ponto — ${model.clientName}`,
       )
       toast('CSV exportado')
     } catch {

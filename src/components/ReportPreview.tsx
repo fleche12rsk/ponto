@@ -102,7 +102,7 @@ export function ReportPreview({
       </div>
 
       <footer style={S.footer}>
-        <span>Gerado por Horas · {model.generatedAt}</span>
+        <span>Gerado por Ponto · {model.generatedAt}</span>
         <span>Página 1</span>
       </footer>
     </div>

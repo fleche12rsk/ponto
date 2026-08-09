@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'dev.micio.horas',
-  appName: 'Horas',
+  appId: 'dev.micio.ponto',
+  appName: 'Ponto',
   webDir: 'dist',
   android: {
     backgroundColor: '#12110E',
@@ -16,7 +16,7 @@ const config: CapacitorConfig = {
       showSpinner: false,
     },
     LocalNotifications: {
-      smallIcon: 'ic_stat_horas',
+      smallIcon: 'ic_stat_ponto',
       iconColor: '#FFB020',
     },
   },

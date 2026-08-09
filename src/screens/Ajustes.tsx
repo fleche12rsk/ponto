@@ -24,7 +24,7 @@ export function Ajustes({ onAbout }: { onAbout: () => void }) {
 
   async function exportEverything() {
     try {
-      await shareCsv(exportJson(db), 'horas-backup.json', 'Backup do Horas')
+      await shareCsv(exportJson(db), 'ponto-backup.json', 'Backup do Ponto')
       toast('Backup exportado')
     } catch {
       toast('Não deu para exportar')

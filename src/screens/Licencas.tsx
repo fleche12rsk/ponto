@@ -27,7 +27,7 @@ export function Licencas({ onBack }: { onBack: () => void }) {
 
       <div className="screen-body">
         <p className="t-body c-2" style={{ marginBottom: 'var(--space-5)' }}>
-          O Horas usa estes projetos de código aberto. Toque em cada um para ler a licença completa.
+          O Ponto usa estes projetos de código aberto. Toque em cada um para ler a licença completa.
         </p>
 
         {THIRD_PARTY_LICENSES.map((item) => {
@@ -84,7 +84,7 @@ export function Licencas({ onBack }: { onBack: () => void }) {
         })}
 
         <p className="t-caption c-3" style={{ marginTop: 'var(--space-6)' }}>
-          O próprio Horas é distribuído sob a licença MIT.
+          O próprio Ponto é distribuído sob a licença MIT.
         </p>
       </div>
     </section>
