@@ -17,9 +17,15 @@ Este projeto foi construído inteiro em conversa com IA, e faz sentido dizer iss
 
 O fluxo foi em três etapas, cada uma com um papel diferente:
 
+<<<<<<< Updated upstream
 1. **Direção humana:** a ideia, a escolha do problema a resolver, os critérios de "isso é útil de verdade?" e cada decisão de produto (nome, escopo, o que fica de fora) partiram de mim.
 2. **Claude, como designer:** recebeu um briefing e devolveu um documento de design fechado: paleta com contraste verificado, escala tipográfica, todos os estados de cada tela, o texto exato de cada botão, o modelo de dados e o layout do PDF. Nenhuma decisão visual ficou em aberto.
 3. **Claude Code, como implementação:** traduziu esse documento em código, rodou o app, testou os fluxos e corrigiu o que quebrou. Onde o documento não cabia na realidade (a escala tipográfica não servia numa tela de 375px), o ajuste está comentado no código com o motivo.
+=======
+1. **Direção humana**: a ideia, a escolha do problema a resolver, os critérios de "isso é útil de verdade?" e cada decisão de produto (nome, escopo, o que fica de fora) partiram de mim.
+2. **Claude, como designer**: recebeu um briefing e devolveu um docs de design: paleta com contraste verificado, escala tipográfica, todos os estados de cada tela, o texto exato de cada botão, o modelo de dados e o layout do PDF. Nenhuma decisão visual ficou em aberto.
+3. **Claude Code, como implementação**: traduziu esse documento em código, rodou o app, testou os fluxos e corrigiu o que quebrou.
+>>>>>>> Stashed changes
 
 O que isso **não** significa: não é código gerado às cegas e colado. Cada decisão de arquitetura tem uma razão registrada: o cronômetro deriva o tempo de `started_at` em vez de acumular por tick, a tarifa fica congelada no registro, os textos de licença são gerados a partir dos arquivos originais em vez de transcritos. A seção [Decisões de implementação](#decisões-de-implementação) existe justamente para isso.
 
@@ -33,7 +39,11 @@ Vibe coding não é abrir mão do critério. É mover o critério do "como escre
 npm install && npm run dev
 ```
 
+<<<<<<< Updated upstream
 Abre em `http://localhost:5173`. Serve para desenvolver e testar tudo menos as notificações: no navegador elas viram no-op, e o compartilhamento de PDF/CSV vira download.
+=======
+Abre em `http://localhost:5173`. Serve para desenvolver e testar tudo menos as notificações (no navegador elas viram no-op), e o compartilhamento de PDF/CSV vira download.
+>>>>>>> Stashed changes
 
 ## Gerar o APK
 
@@ -97,7 +107,7 @@ src/
 
 ## Decisões de implementação
 
-Onde o documento de design deixou espaço técnico, estas foram as escolhas — e o porquê.
+Onde o documento de design deixou espaço técnico, estas foram as escolhas e o porquê.
 
 **O cronômetro nunca acumula por tick.** O tempo decorrido é sempre calculado a partir de `started_at`. Fechar o app, apagar a tela ou o WebView ser descartado pelo sistema não perde um segundo. Verificado: com o timer rodando, um reload completo da página retoma a contagem no valor certo.
 
@@ -105,7 +115,7 @@ Onde o documento de design deixou espaço técnico, estas foram as escolhas — 
 
 **A pré-visualização do relatório é HTML, não o PDF embutido.** O WebView do Android não abre PDF em `<iframe>`. Em vez de embutir um leitor de PDF inteiro no app, a pré-visualização é uma renderização em HTML do **mesmo modelo** que gera o PDF (`lib/report.ts`): o que aparece na tela é o que sai no arquivo.
 
-**Fontes do PDF.** O PDF usa Times/Helvetica/Courier em vez de Source Serif 4 / Public Sans / IBM Plex Mono. São vetoriais, universais e não somam megabytes de fonte embutida ao APK; o papel de cada uma (serifada nos títulos, mono nos números tabulares) é o mesmo do §5.4. A interface do app usa as fontes especificadas, empacotadas localmente.
+**Fontes do PDF.** O PDF usa Times/Helvetica/Courier em vez de Source Serif 4/Public Sans/IBM Plex Mono. São vetoriais, universais e não somam megabytes de fonte embutida ao APK; o papel de cada uma (serifada nos títulos, mono nos números tabulares) é o mesmo do §5.4. A interface do app usa as fontes especificadas, empacotadas localmente.
 
 **Persistência em JSON, não SQLite.** O §9 permitia os dois. Um freelancer gera algo como mil registros por ano: guardar o banco inteiro como um JSON no Capacitor Preferences é suficiente, mantém a leitura síncrona e evita a complexidade de migrações de schema. A troca por SQLite, se um dia fizer sentido, é isolada em `lib/db.ts`.
 
@@ -117,7 +127,11 @@ Onde o documento de design deixou espaço técnico, estas foram as escolhas — 
 
 ## Licença
 
+<<<<<<< Updated upstream
 O Ponto é [MIT](LICENSE): pode usar, modificar e distribuir, inclusive comercialmente, mantendo o aviso de copyright.
+=======
+O Ponto é [MIT](LICENSE) : pode usar, modificar e distribuir, inclusive comercialmente, mantendo o aviso de copyright.
+>>>>>>> Stashed changes
 
 As dependências que vão dentro do APK são MIT, ISC e OFL-1.1 (as três fontes). Os avisos e textos completos ficam na tela **Ajustes → Sobre → Licenças** do app, gerada a partir dos arquivos `LICENSE` reais:
 
