@@ -6,7 +6,6 @@ Tudo fica no celular. Sem servidor, sem login, sem internet.
 
 - **Stack:** React 18 + TypeScript + Vite, empacotado com Capacitor 7
 - **Plataformas:** Android (pronto), iOS (mesmo código, falta só compilar num Mac)
-- **Design:** implementação literal de [`docs/design.md`](docs/design.md)
 
 O nome vem do "bater ponto" — e do ícone, que são literalmente os dois pontos de um relógio digital.
 
