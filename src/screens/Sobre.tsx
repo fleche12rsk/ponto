@@ -1,8 +1,14 @@
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, ChevronRight } from 'lucide-react'
 import { APP_VERSION } from '../lib/version'
 
 /** Sobre (§4.12) — sóbrio, uma tela. */
-export function Sobre({ onBack }: { onBack: () => void }) {
+export function Sobre({
+  onBack,
+  onLicenses,
+}: {
+  onBack: () => void
+  onLicenses: () => void
+}) {
   return (
     <section className="stack-screen">
       <header className="screen-header">
@@ -29,6 +35,16 @@ export function Sobre({ onBack }: { onBack: () => void }) {
           </p>
           <p className="t-caption c-3">Versão {APP_VERSION}</p>
         </div>
+
+        <hr className="divider" />
+
+        <button type="button" className="setting-row" onClick={onLicenses}>
+          <span className="col grow">
+            <span className="t-body">Licenças</span>
+            <span className="t-caption c-3">Os projetos de código aberto que o Horas usa.</span>
+          </span>
+          <ChevronRight size={20} className="c-3" aria-hidden="true" />
+        </button>
 
         <hr className="divider" />
 

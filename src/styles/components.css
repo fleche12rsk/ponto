@@ -941,6 +941,27 @@ textarea.field-input {
   }
 }
 
+/* ---------- Texto de licença ---------- */
+
+.license-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-2);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  /* Preserva as quebras da licença, mas deixa a linha longa dobrar em vez
+     de empurrar a página inteira para o lado. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 320px;
+  overflow-y: auto;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 /* ---------- Pré-visualização do PDF ---------- */
 
 .pdf-preview {

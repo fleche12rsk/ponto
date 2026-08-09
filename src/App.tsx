@@ -11,6 +11,7 @@ import { Resumo } from './screens/Resumo'
 import { Clientes } from './screens/Clientes'
 import { Ajustes } from './screens/Ajustes'
 import { Sobre } from './screens/Sobre'
+import { Licencas } from './screens/Licencas'
 import { ClienteDetalhe } from './screens/ClienteDetalhe'
 import { ProjetoDetalhe } from './screens/ProjetoDetalhe'
 import { Relatorio } from './screens/Relatorio'
@@ -26,6 +27,7 @@ type StackEntry =
   | { kind: 'project'; projectId: string }
   | { kind: 'report'; clientId: string }
   | { kind: 'about' }
+  | { kind: 'licenses' }
 
 export function App() {
   const db = useDb()
@@ -151,7 +153,11 @@ export function App() {
           />
         )}
 
-        {top?.kind === 'about' && <Sobre onBack={pop} />}
+        {top?.kind === 'about' && (
+          <Sobre onBack={pop} onLicenses={() => push({ kind: 'licenses' })} />
+        )}
+
+        {top?.kind === 'licenses' && <Licencas onBack={pop} />}
       </main>
 
       <TabBar

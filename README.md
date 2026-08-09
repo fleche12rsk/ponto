@@ -98,4 +98,18 @@ Onde o documento de design deixou espaço técnico, estas foram as escolhas — 
 
 ---
 
+## Licença
+
+O Horas é [MIT](LICENSE) — pode usar, modificar e distribuir, inclusive comercialmente, mantendo o aviso de copyright.
+
+As dependências que vão dentro do APK são MIT, ISC e OFL-1.1 (as três fontes). Os avisos e textos completos ficam na tela **Ajustes → Sobre → Licenças** do app, gerada a partir dos arquivos `LICENSE` reais:
+
+```bash
+node scripts/gerar-licencas.mjs
+```
+
+Rode esse comando de novo se mexer nas dependências empacotadas. Ferramentas de build (Vite, TypeScript, CLI do Capacitor) não entram na lista porque não vão para o APK.
+
+---
+
 Feito por [micio.dev](https://micio.dev).
