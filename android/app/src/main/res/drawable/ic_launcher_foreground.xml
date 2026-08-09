@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Ícone do app (§12): os dois pontos de um relógio digital.
+  A tela adaptável do Android tem 108dp, mas só os 72dp centrais são a zona
+  segura — os pontos ficam bem dentro dela para nenhuma máscara cortá-los.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:fillColor="#FFB020"
+        android:pathData="M54,42m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0" />
+
+    <path
+        android:fillColor="#FFB020"
+        android:pathData="M54,66m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0" />
+</vector>

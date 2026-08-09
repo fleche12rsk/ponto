@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema escuro (§5.1) — é o padrão do app. -->
+    <color name="colorPrimary">#FFB020</color>
+    <color name="colorPrimaryDark">#E09600</color>
+    <color name="colorAccent">#FFB020</color>
+
+    <color name="splashBackground">#12110E</color>
+</resources>

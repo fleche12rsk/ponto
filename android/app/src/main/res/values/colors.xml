@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cores do sistema visual do app (§5.2 — tema claro). -->
+    <color name="colorPrimary">#F5A100</color>
+    <color name="colorPrimaryDark">#D98F00</color>
+    <color name="colorAccent">#F5A100</color>
+
+    <!-- Fundo da tela de abertura: papel quente (§12). -->
+    <color name="splashBackground">#F7F5F0</color>
+</resources>

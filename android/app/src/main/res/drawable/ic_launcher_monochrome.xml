@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Versão monocromática (Android 13+): o sistema pinta o glifo com a cor do
+  tema do usuário, então aqui ele é branco sobre transparente (§12).
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,42m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0" />
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,66m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0" />
+</vector>

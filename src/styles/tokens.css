@@ -1,0 +1,109 @@
+/* ============================================================
+   Horas — Tokens de design
+   Valores literais do documento base, §5 Sistema visual.
+   ============================================================ */
+
+:root {
+  /* ---- Espaçamento (§5.5) — escala base 4px ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 48px;
+  --space-10: 64px;
+
+  /* ---- Raios (§5.6) ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* ---- Tipografia (§5.4) ---- */
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-sans: 'Public Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* ---- Movimento (§7) ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --dur-press: 90ms;
+  --dur-tab: 160ms;
+  --dur-sheet-in: 220ms;
+  --dur-sheet-out: 180ms;
+  --dur-toast: 200ms;
+
+  /* ---- Cores de cliente (§5.3) — fixas nos dois temas ---- */
+  --client-indigo: #6c7bff;
+  --client-rosa: #f26d9c;
+  --client-turquesa: #3fc7c0;
+  --client-azul-aco: #4f9dde;
+  --client-verde-musgo: #7fb069;
+  --client-terracota: #e08a5b;
+  --client-violeta: #b085f5;
+  --client-areia: #d4a94e;
+}
+
+/* ---- Tema escuro (padrão) — §5.1 ---- */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #12110e;
+  --surface: #1b1a16;
+  --card: #201e19;
+  --line: #2e2c26;
+
+  --text-1: #f4f1ea;
+  --text-2: #b8b3a7;
+  --text-3: #8f8a7c;
+
+  --amber: #ffb020;
+  --amber-fill: #ffb020;
+  --amber-text: #ffb020;
+  --amber-pressed: #e09600;
+  --on-amber: #17160f;
+
+  --warn: #e8956a;
+  --danger: #ff6b6b;
+  --success: #6fcf97;
+
+  --shadow-card: none;
+  --shadow-sheet: 0 -8px 32px rgba(0, 0, 0, 0.45);
+  --shadow-amber: 0 2px 8px rgba(255, 176, 32, 0.2);
+  --shadow-popover: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --backdrop: rgba(0, 0, 0, 0.5);
+  --zebra: rgba(255, 255, 255, 0.03);
+}
+
+/* ---- Tema claro — §5.2 ---- */
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --line: #e8e4da;
+
+  --text-1: #1a1813;
+  --text-2: #565248;
+  --text-3: #7c7768;
+
+  --amber: #f5a100;
+  /* Preenchimento de botão usa #F5A100; âmbar como TEXTO usa #8A5A00 (§5.2). */
+  --amber-fill: #f5a100;
+  --amber-text: #8a5a00;
+  --amber-pressed: #d98f00;
+  --on-amber: #17160f;
+
+  --warn: #b45309;
+  --danger: #c62828;
+  --success: #1e7a46;
+
+  --shadow-card: 0 1px 2px rgba(20, 18, 14, 0.06);
+  --shadow-sheet: 0 -8px 32px rgba(20, 18, 14, 0.12);
+  --shadow-amber: 0 2px 8px rgba(245, 161, 0, 0.25);
+  --shadow-popover: 0 12px 40px rgba(20, 18, 14, 0.16);
+  --backdrop: rgba(20, 18, 14, 0.45);
+  --zebra: rgba(20, 18, 14, 0.04);
+}

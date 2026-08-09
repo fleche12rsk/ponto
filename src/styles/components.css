@@ -1,0 +1,952 @@
+/* ============================================================
+   Horas — Componentes
+   Estados literais do documento base, §6.
+   Toque mínimo 48×48px em todo alvo (§11).
+   ============================================================ */
+
+/* ---------- 6.1 Botões ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  transition:
+    transform var(--dur-press) var(--ease-standard),
+    background var(--dur-press) var(--ease-standard),
+    color var(--dur-press) var(--ease-standard),
+    border-color var(--dur-press) var(--ease-standard);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  pointer-events: none;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Primário (âmbar) */
+.btn-primary {
+  background: var(--amber-fill);
+  color: var(--on-amber);
+  box-shadow: var(--shadow-amber);
+}
+
+.btn-primary:active:not(:disabled) {
+  background: var(--amber-pressed);
+}
+
+.btn-primary:disabled {
+  background: var(--line);
+  color: var(--text-3);
+  box-shadow: none;
+}
+
+/* Grande (timer) — altura 64px, largura quase total */
+.btn-lg {
+  min-height: 64px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-lg);
+}
+
+/* Secundário */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-1);
+}
+
+.btn-secondary:active:not(:disabled) {
+  background: var(--surface);
+}
+
+.btn-secondary:disabled {
+  color: var(--text-3);
+  border-color: var(--line);
+  opacity: 0.5;
+}
+
+/* Texto */
+.btn-text {
+  background: transparent;
+  color: var(--text-2);
+  padding: 0 var(--space-3);
+  box-shadow: none;
+}
+
+.btn-text:active:not(:disabled) {
+  color: var(--text-1);
+}
+
+.btn-text:disabled {
+  color: var(--text-3);
+}
+
+/* Destrutivo */
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+}
+
+.btn-danger-solid {
+  background: var(--danger);
+  color: var(--on-amber);
+}
+
+.btn-danger-solid:active:not(:disabled) {
+  filter: brightness(0.92);
+}
+
+/* Carregando: mantém a largura, esmaece o rótulo */
+.btn-loading > .btn-label {
+  opacity: 0.45;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+  flex: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- 6.2 Campos de formulário ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field + .field {
+  margin-top: var(--space-4);
+}
+
+.field-label {
+  color: var(--text-2);
+}
+
+.field-box {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 52px;
+  padding: 0 var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--dur-press) var(--ease-standard);
+}
+
+.field-box:focus-within {
+  border-color: var(--amber);
+  border-width: 2px;
+  padding: 0 calc(var(--space-3) - 1px);
+}
+
+.field-box.is-error {
+  border-color: var(--danger);
+}
+
+.field-box.is-disabled {
+  background: var(--bg);
+}
+
+/* 16px evita o zoom automático do WebView ao focar (§6.2) */
+.field-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-1);
+  padding: var(--space-3) 0;
+}
+
+.field-input::placeholder {
+  color: var(--text-3);
+}
+
+.field-input:disabled {
+  color: var(--text-3);
+}
+
+.field-prefix {
+  color: var(--text-2);
+  flex: none;
+}
+
+.field-error {
+  color: var(--danger);
+}
+
+.field-hint {
+  color: var(--text-3);
+}
+
+textarea.field-input {
+  resize: none;
+  min-height: 52px;
+  max-height: 112px; /* ~4 linhas */
+}
+
+/* Campo tocável que abre um seletor (data, projeto) */
+.field-button {
+  width: 100%;
+  text-align: left;
+  justify-content: space-between;
+}
+
+/* ---------- Seletor de cor de cliente (§5.3) ---------- */
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--space-2);
+}
+
+.color-swatch {
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 36px;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-swatch::before {
+  content: '';
+  position: absolute;
+  inset: -6px; /* estende o alvo de toque a 48px sem inchar o visual */
+}
+
+.color-swatch[aria-checked='true'] {
+  border-color: var(--text-1);
+}
+
+/* ---------- Segmento (§6.3) ---------- */
+
+.segmented {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.segmented-item {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--text-2);
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background var(--dur-tab) var(--ease-standard),
+    color var(--dur-tab) var(--ease-standard);
+}
+
+.segmented-item[aria-selected='true'] {
+  background: var(--card);
+  color: var(--text-1);
+  font-weight: 600;
+  box-shadow: var(--shadow-card);
+}
+
+/* ---------- Cartões ---------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+}
+
+/* 6.4 Cartão de cliente — faixa lateral 3px na cor do cliente */
+.client-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  text-align: left;
+  padding: var(--space-4);
+  padding-left: calc(var(--space-4) + 3px);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: background var(--dur-press) var(--ease-standard);
+}
+
+.client-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--client-color);
+}
+
+.client-card:active {
+  background: var(--surface);
+}
+
+.client-card + .client-card {
+  margin-top: var(--space-3);
+}
+
+/* Bolinha de cor: identidade, 8–10px (§5.3) */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--client-color);
+  flex: none;
+}
+
+.dot-sm {
+  width: 8px;
+  height: 8px;
+}
+
+/* ---------- 6.5 Linha de registro ---------- */
+
+.entry-row {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.entry-row-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 64px;
+  padding: var(--space-3);
+  text-align: left;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  transition:
+    transform var(--dur-tab) var(--ease-standard),
+    background var(--dur-press) var(--ease-standard);
+}
+
+.entry-row-inner:active {
+  background: var(--surface);
+}
+
+/* Deslize para a esquerda revela Apagar */
+.entry-row.is-swiped .entry-row-inner {
+  transform: translateX(-88px);
+}
+
+.entry-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--danger);
+  color: var(--on-amber);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+/* Realce do registro recém-salvo — esmaece em 600ms (§7) */
+@keyframes entry-highlight {
+  from {
+    background: color-mix(in srgb, var(--amber) 22%, transparent);
+  }
+  to {
+    background: var(--bg);
+  }
+}
+
+.entry-row-inner.is-new {
+  animation: entry-highlight 600ms var(--ease-standard) 120ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-row-inner.is-new {
+    animation: none;
+    background: color-mix(in srgb, var(--amber) 12%, transparent);
+  }
+}
+
+.day-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-3) var(--space-2);
+}
+
+/* ---------- Selos ---------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-2);
+  flex: none;
+}
+
+.badge-success {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+}
+
+.badge-amber {
+  color: var(--amber-text);
+  background: color-mix(in srgb, var(--amber) 14%, transparent);
+}
+
+/* ---------- Par de totais: horas + R$ lado a lado (§4.5) ---------- */
+
+.total-pair {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-5);
+}
+
+.total-pair > .col {
+  flex: none;
+  min-width: 0;
+}
+
+/*
+  A escala do §5.4 (34px / 40px) assume uma largura que um celular de 375px
+  não tem: "40h 30min" ao lado de "R$ 5.307,50" quebrava em duas linhas.
+  Os valores encolhem junto com a tela e voltam ao tamanho especificado
+  assim que ela permite — e nunca quebram no meio de um número.
+*/
+.total-pair .t-display,
+.total-pair .t-display-money {
+  white-space: nowrap;
+}
+
+.total-pair .t-display {
+  font-size: clamp(26px, 7vw, 34px);
+}
+
+.total-pair .t-display-money {
+  font-size: clamp(30px, 8.5vw, 40px);
+}
+
+@media (max-width: 400px) {
+  .total-pair {
+    gap: var(--space-4);
+  }
+}
+
+/* ---------- Barra de progresso / proporção (§5.8) ---------- */
+
+.bar-track {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--client-color, var(--amber-fill));
+  transform-origin: left center;
+}
+
+/* Barras do Resumo crescem da esquerda, uma vez (§7) */
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.bar-fill.is-animated {
+  animation: bar-grow 400ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-fill.is-animated {
+    animation: none;
+  }
+}
+
+/* Estouro de orçado: clay, sem vermelho, sem alarme (§6.10) */
+.bar-fill.is-over {
+  background: var(--warn);
+}
+
+/* ---------- 6.7 Barra de abas ---------- */
+
+.tabbar {
+  display: flex;
+  align-items: stretch;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  flex: none;
+}
+
+.tabbar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 56px;
+  padding: var(--space-2) var(--space-1);
+  color: var(--text-3);
+  transition:
+    color var(--dur-tab) var(--ease-standard),
+    background var(--dur-press) var(--ease-standard);
+}
+
+.tabbar-item[aria-current='page'] {
+  color: var(--amber-text);
+}
+
+.tabbar-item:active {
+  background: var(--bg);
+}
+
+/* ---------- 6.8 Folha inferior ---------- */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop);
+  z-index: 50;
+  animation: backdrop-in var(--dur-sheet-in) var(--ease-standard) both;
+}
+
+.backdrop.is-closing {
+  animation: backdrop-out var(--dur-sheet-out) var(--ease-standard) both;
+}
+
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes backdrop-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 51;
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+  background: var(--card);
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sheet);
+  animation: sheet-in var(--dur-sheet-in) var(--ease-standard) both;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.sheet.is-closing {
+  animation: sheet-out var(--dur-sheet-out) var(--ease-standard) both;
+}
+
+@keyframes sheet-in {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes sheet-out {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet,
+  .sheet.is-closing {
+    animation: none;
+  }
+}
+
+.sheet-grabber {
+  width: 36px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  margin: var(--space-2) auto var(--space-1);
+  flex: none;
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4) var(--space-2);
+  color: var(--text-3);
+  flex: none;
+}
+
+.sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-2) var(--space-4) var(--space-4);
+}
+
+.sheet-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--line);
+  flex: none;
+}
+
+/* ---------- 6.9 Diálogo ---------- */
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 61;
+  width: calc(100% - var(--space-8));
+  max-width: 320px;
+  padding: var(--space-5);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-popover);
+  animation: dialog-in var(--dur-tab) var(--ease-standard) both;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+/* ---------- 6.10 Banner e toast ---------- */
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin: var(--space-3) var(--space-4) 0;
+  padding: var(--space-3);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--text-2);
+}
+
+.toast-layer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--space-4) calc(var(--space-4) + 56px + env(safe-area-inset-bottom, 0px));
+  pointer-events: none;
+}
+
+.toast {
+  padding: var(--space-3) var(--space-4);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-popover);
+  color: var(--text-1);
+  animation: toast-in var(--dur-toast) var(--ease-standard) both;
+}
+
+.toast.is-closing {
+  animation: toast-out var(--dur-toast) var(--ease-standard) both;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ---------- 6.6 Display do cronômetro ---------- */
+
+.timer-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  color: var(--text-1);
+}
+
+.timer-display.is-idle {
+  color: var(--text-3);
+}
+
+.timer-display.is-paused {
+  color: var(--text-2);
+}
+
+.timer-hours.is-long {
+  color: var(--amber-text);
+}
+
+.timer-seconds {
+  color: var(--text-2);
+}
+
+/* Pulso do :SS — só opacidade, layout imóvel (§7) */
+.timer-seconds.is-running {
+  animation: sec-pulse 1s ease-in-out infinite;
+}
+
+@keyframes sec-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.pause-mark {
+  animation: pause-blink 1.6s ease-in-out infinite;
+}
+
+@keyframes pause-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timer-seconds.is-running,
+  .pause-mark {
+    animation: none;
+  }
+}
+
+/* Selo "Contando em segundo plano" */
+.bg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  animation: chip-in 150ms var(--ease-standard) both;
+}
+
+.bg-chip.is-leaving {
+  animation: chip-out 300ms var(--ease-standard) both;
+}
+
+@keyframes chip-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes chip-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Pulso único do botão Começar, ao fim do onboarding (§7) */
+@keyframes cta-pulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+.btn.is-pulsing {
+  animation: cta-pulse 600ms ease-out 1 both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.is-pulsing {
+    animation: none;
+  }
+}
+
+/* ---------- Estados vazios ---------- */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+  padding: var(--space-10) var(--space-4) var(--space-8);
+}
+
+.empty p {
+  color: var(--text-2);
+  max-width: 30ch;
+}
+
+.empty .btn {
+  margin-top: var(--space-3);
+}
+
+/* ---------- Lista de opções (folhas de escolha) ---------- */
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-3);
+  text-align: left;
+  border-radius: var(--radius-md);
+  transition: background var(--dur-press) var(--ease-standard);
+}
+
+.option-row:active {
+  background: var(--surface);
+}
+
+.option-row[aria-selected='true'] {
+  background: var(--surface);
+}
+
+/* ---------- Linha de ajuste ---------- */
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-3) 0;
+  text-align: left;
+}
+
+.setting-row + .setting-row {
+  border-top: 1px solid var(--line);
+}
+
+.switch {
+  position: relative;
+  width: 46px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+  flex: none;
+  transition: background var(--dur-tab) var(--ease-standard);
+}
+
+.switch[aria-checked='true'] {
+  background: var(--amber-fill);
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-pill);
+  background: var(--text-1);
+  transition: transform var(--dur-tab) var(--ease-standard);
+}
+
+[data-theme='light'] .switch::after {
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(20, 18, 14, 0.25);
+}
+
+.switch[aria-checked='true']::after {
+  transform: translateX(18px);
+  background: var(--on-amber);
+}
+
+/* ---------- Transição de conteúdo entre abas (§7) ---------- */
+
+@keyframes tab-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content {
+  animation: tab-in var(--dur-tab) var(--ease-standard) both;
+  display: contents;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-content {
+    animation: none;
+  }
+}
+
+/* ---------- Pré-visualização do PDF ---------- */
+
+.pdf-preview {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: none;
+  background: #fff;
+}

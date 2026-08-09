@@ -1,0 +1,18 @@
+# Normaliza as quebras de linha no repositório.
+* text=auto eol=lf
+
+# O gradlew é executado como shell script no runner Linux do GitHub Actions —
+# com CRLF ele quebra com "bad interpreter". Precisa ser LF sempre.
+gradlew text eol=lf
+*.sh text eol=lf
+
+# Scripts do Windows continuam CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binários não passam por conversão.
+*.png binary
+*.jpg binary
+*.jar binary
+*.keystore binary
+*.woff2 binary
