@@ -2,7 +2,7 @@ import type { ReactNode, TextareaHTMLAttributes, InputHTMLAttributes } from 'rea
 import { ChevronRight } from 'lucide-react'
 
 /* ============================================================
-   Primitivas de interface — §6
+   Primitivas de interface: §6
    ============================================================ */
 
 type ButtonVariant = 'primary' | 'secondary' | 'text' | 'danger' | 'danger-solid'

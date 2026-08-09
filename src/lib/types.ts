@@ -1,5 +1,5 @@
 /**
- * Modelo de dados — §9 do documento base.
+ * Modelo de dados: §9 do documento base.
  *
  * Convenções que valem para todo o app:
  *  - dinheiro em CENTAVOS (inteiro), nunca float;
@@ -83,7 +83,7 @@ export interface Settings {
   theme: ThemePref
   notif_long_timer_hours: number
   notif_end_of_day: boolean
-  /** Cabeçalho do PDF (§10) — quem assina o relatório. */
+  /** Cabeçalho do PDF (§10): quem assina o relatório. */
   freelancer_name: string
   freelancer_contact: string
 }

@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-/* Fontes locais (§5.4) — empacotadas no app, nada de CDN: o Ponto funciona
+/* Fontes locais (§5.4): empacotadas no app, nada de CDN: o Ponto funciona
    sem internet. */
 import '@fontsource/public-sans/400.css'
 import '@fontsource/public-sans/500.css'

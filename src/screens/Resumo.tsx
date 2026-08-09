@@ -29,7 +29,7 @@ import type { TimeEntry } from '../lib/types'
 type View = 'resumo' | 'historico'
 
 /**
- * Resumo (§4.5) e Histórico (§4.6) — sub-visões da mesma aba, porque quase
+ * Resumo (§4.5) e Histórico (§4.6): sub-visões da mesma aba, porque quase
  * sempre se chega no histórico a partir de um total que se quer detalhar.
  */
 export function Resumo({

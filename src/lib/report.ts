@@ -6,7 +6,7 @@ import { formatMoney } from './money'
 /* ============================================================
    Modelo do relatório (§10)
    Uma única preparação de dados alimenta a pré-visualização em HTML,
-   o PDF e o CSV — o que se vê na tela é exatamente o que sai no arquivo.
+   o PDF e o CSV: o que se vê na tela é exatamente o que sai no arquivo.
    ============================================================ */
 
 export interface ReportOptions {
@@ -37,7 +37,7 @@ export interface ReportModel {
   freelancerName: string
   freelancerContact: string
   clientName: string
-  /** null quando os projetos usam tarifas diferentes — aí vai por projeto. */
+  /** null quando os projetos usam tarifas diferentes: aí vai por projeto. */
   uniformRate: string | null
   periodLabel: string
   groups: ReportGroup[]

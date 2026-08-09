@@ -13,7 +13,7 @@ import { formatMoney } from '../lib/money'
 import { formatDayHeader, formatDuration } from '../lib/time'
 import type { TimeEntry } from '../lib/types'
 
-/** Detalhe do projeto (§4.9) — orçado × trabalhado e todos os registros. */
+/** Detalhe do projeto (§4.9): orçado × trabalhado e todos os registros. */
 export function ProjetoDetalhe({
   projectId,
   onBack,

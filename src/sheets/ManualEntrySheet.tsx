@@ -56,7 +56,7 @@ export function ManualEntrySheet({
 
   const label = projectId ? projectLabel(db, projectId) : null
 
-  /** Duração calculada ao vivo — o usuário confere sem fazer conta (§4.4). */
+  /** Duração calculada ao vivo: o usuário confere sem fazer conta (§4.4). */
   const computed = useMemo(() => {
     if (mode === 'duration') {
       const seconds = parseHoursToSeconds(durationText)

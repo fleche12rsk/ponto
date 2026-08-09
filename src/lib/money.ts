@@ -1,5 +1,5 @@
 /* ============================================================
-   Dinheiro — sempre em centavos inteiros (§9)
+   Dinheiro: sempre em centavos inteiros (§9)
    ============================================================ */
 
 /** `R$ 4.250,00` */
@@ -12,7 +12,7 @@ export function formatMoney(cents: number, currency = 'BRL'): string {
   }).format(cents / 100)
 }
 
-/** `4.250,00` — sem símbolo, para tabelas onde a moeda já está no cabeçalho. */
+/** `4.250,00`: sem símbolo, para tabelas onde a moeda já está no cabeçalho. */
 export function formatMoneyPlain(cents: number): string {
   return new Intl.NumberFormat('pt-BR', {
     minimumFractionDigits: 2,

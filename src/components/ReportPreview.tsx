@@ -1,7 +1,7 @@
 import type { ReportModel } from '../lib/report'
 
 /**
- * Pré-visualização do relatório (§4.10) — espelho em HTML do layout do PDF
+ * Pré-visualização do relatório (§4.10): espelho em HTML do layout do PDF
  * definido no §10. Sempre em papel branco e tipografia sóbria: quem lê é o
  * cliente do freelancer, não o usuário do app, então o tema escuro não entra
  * aqui nem quando o app está no escuro.

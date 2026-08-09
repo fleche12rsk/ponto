@@ -1,5 +1,5 @@
 /* ============================================================
-   Ponto — Componentes
+   Ponto: componentes
    Estados literais do documento base, §6.
    Toque mínimo 48×48px em todo alvo (§11).
    ============================================================ */
@@ -53,7 +53,7 @@
   box-shadow: none;
 }
 
-/* Grande (timer) — altura 64px, largura quase total */
+/* Grande (timer): altura 64px, largura quase total */
 .btn-lg {
   min-height: 64px;
   font-size: 16px;
@@ -289,7 +289,7 @@ textarea.field-input {
   padding: var(--space-4);
 }
 
-/* 6.4 Cartão de cliente — faixa lateral 3px na cor do cliente */
+/* 6.4 Cartão de cliente: faixa lateral 3px na cor do cliente */
 .client-card {
   position: relative;
   display: flex;
@@ -386,7 +386,7 @@ textarea.field-input {
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
-/* Realce do registro recém-salvo — esmaece em 600ms (§7) */
+/* Realce do registro recém-salvo: esmaece em 600ms (§7) */
 @keyframes entry-highlight {
   from {
     background: color-mix(in srgb, var(--amber) 22%, transparent);

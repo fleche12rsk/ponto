@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
 /* ============================================================
-   Toast — confirmação efêmera, 2.5s visíveis (§6.10)
+   Toast: confirmação efêmera, 2.5s visíveis (§6.10)
    ============================================================ */
 
 type ToastListener = (message: string) => void
 
 let listener: ToastListener | null = null
 
-/** `toast('Registro salvo')` — textos exatos em §8. */
+/** `toast('Registro salvo')`: textos exatos em §8. */
 export function toast(message: string) {
   listener?.(message)
 }

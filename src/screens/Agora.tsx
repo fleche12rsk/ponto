@@ -23,7 +23,7 @@ import { lastUsedProjectId } from '../lib/recent'
 type SheetKind = 'pick' | 'finish' | 'manual' | 'new-client' | 'new-project' | null
 
 /**
- * Agora — tela principal do cronômetro (§4.1).
+ * Agora: tela principal do cronômetro (§4.1).
  * Hierarquia: timer → projeto → botão de ação → total do dia.
  */
 export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void }) {
@@ -134,7 +134,7 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
       </header>
 
       <div className="screen-body" style={{ display: 'flex', flexDirection: 'column' }}>
-        {/* Bloco do timer — respiro generoso, é tela-momento (§5.5). */}
+        {/* Bloco do timer: respiro generoso, é tela-momento (§5.5). */}
         <div
           style={{
             flex: 1,
@@ -158,7 +158,7 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
             <span className="bg-chip t-caption">Contando em segundo plano</span>
           )}
 
-          {/* Card do projeto ativo — toque troca de projeto. */}
+          {/* Card do projeto ativo: toque troca de projeto. */}
           <button
             type="button"
             className="row"

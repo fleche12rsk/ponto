@@ -7,7 +7,7 @@ import { useDb } from '../store/useStore'
 import { closedEntries, sumEntries } from '../lib/calc'
 import { currentMonth, formatDuration, isInPeriod } from '../lib/time'
 
-/** Clientes — lista (§4.7). */
+/** Clientes: lista (§4.7). */
 export function Clientes({ onOpenClient }: { onOpenClient: (clientId: string) => void }) {
   const db = useDb()
   const [newClient, setNewClient] = useState(false)

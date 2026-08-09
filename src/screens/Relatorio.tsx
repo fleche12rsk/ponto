@@ -56,7 +56,7 @@ export function Relatorio({
       await sharePdf(
         pdfToBase64(doc),
         pdfFileName(model.clientName, model.periodLabel),
-        `Relatório de horas — ${model.clientName}`,
+        `Relatório de horas: ${model.clientName}`,
       )
       toast('PDF gerado')
       if (scope !== 'invoiced') setAskInvoice(true)
@@ -75,7 +75,7 @@ export function Relatorio({
       await shareCsv(
         csv,
         pdfFileName(model.clientName, model.periodLabel).replace(/\.pdf$/, '.csv'),
-        `Ponto — ${model.clientName}`,
+        `Ponto: ${model.clientName}`,
       )
       toast('CSV exportado')
     } catch {

@@ -1,7 +1,7 @@
 import type { WeekStart } from './types'
 
 /* ============================================================
-   Tempo — formatação, cálculo e períodos
+   Tempo: formatação, cálculo e períodos
    ============================================================ */
 
 const pad = (n: number) => String(Math.floor(Math.abs(n))).padStart(2, '0')
@@ -19,7 +19,7 @@ export function formatClock(totalSeconds: number): {
   return { hhmm: `${pad(hours)}:${pad(minutes)}`, ss: pad(seconds), hours }
 }
 
-/** `3h 30min` — leitura humana. Para durações em listas e totais. */
+/** `3h 30min`: leitura humana. Para durações em listas e totais. */
 export function formatDuration(totalSeconds: number, opts?: { short?: boolean }): string {
   const s = Math.max(0, Math.round(totalSeconds))
   const hours = Math.floor(s / 3600)
@@ -56,7 +56,7 @@ const MONTHS = [
   'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro',
 ]
 
-/** `Hoje`, `Ontem` ou `quarta, 6 de agosto` — cabeçalho de dia no histórico. */
+/** `Hoje`, `Ontem` ou `quarta, 6 de agosto`: cabeçalho de dia no histórico. */
 export function formatDayHeader(dayKey: string): string {
   const today = dayKeyOf(new Date())
   if (dayKey === today) return 'Hoje'
@@ -69,7 +69,7 @@ export function formatDayHeader(dayKey: string): string {
   return `${WEEKDAYS[d.getDay()]}, ${d.getDate()} de ${MONTHS[d.getMonth()]}`
 }
 
-/** `01–31 de agosto de 2026` — subtítulo de período e cabeçalho do PDF (§10). */
+/** `01–31 de agosto de 2026`: subtítulo de período e cabeçalho do PDF (§10). */
 export function formatRange(startIso: string, endIso: string): string {
   const a = new Date(startIso)
   const b = new Date(endIso)
@@ -86,7 +86,7 @@ export function formatRange(startIso: string, endIso: string): string {
 
 /* ---------- Chaves de dia (agrupamento local, sem UTC) ---------- */
 
-/** `2026-08-09` no fuso LOCAL — agrupar por UTC jogaria registros da noite para o dia seguinte. */
+/** `2026-08-09` no fuso LOCAL: agrupar por UTC jogaria registros da noite para o dia seguinte. */
 export function dayKeyOf(d: Date | string): string {
   const date = typeof d === 'string' ? new Date(d) : d
   return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`

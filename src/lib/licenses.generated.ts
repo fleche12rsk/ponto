@@ -1,5 +1,5 @@
 /**
- * ARQUIVO GERADO — não edite à mão.
+ * ARQUIVO GERADO: não edite à mão.
  * Fonte: os arquivos LICENSE em node_modules.
  * Regenere com: node scripts/gerar-licencas.mjs
  */

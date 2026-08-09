@@ -21,7 +21,7 @@ import { handleBack } from './lib/backstack'
 import { currentMonth, type Period } from './lib/time'
 import { syncEndOfDayReminder, syncTimerNotifications } from './lib/notifications'
 
-/** Telas empilhadas — as que aprofundam e têm botão de voltar (§3). */
+/** Telas empilhadas: as que aprofundam e têm botão de voltar (§3). */
 type StackEntry =
   | { kind: 'client'; clientId: string }
   | { kind: 'project'; projectId: string }

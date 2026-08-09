@@ -1,7 +1,7 @@
 import { BarChart3, Settings, Timer, Users } from 'lucide-react'
 
 /* ============================================================
-   Barra de abas (§6.7) — 4 abas, sem badge numérico.
+   Barra de abas (§6.7): 4 abas, sem badge numérico.
    ============================================================ */
 
 export type Tab = 'agora' | 'resumo' | 'clientes' | 'ajustes'

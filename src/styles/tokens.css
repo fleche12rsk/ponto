@@ -1,10 +1,10 @@
 /* ============================================================
-   Ponto — Tokens de design
+   Ponto: tokens de design
    Valores literais do documento base, §5 Sistema visual.
    ============================================================ */
 
 :root {
-  /* ---- Espaçamento (§5.5) — escala base 4px ---- */
+  /* ---- Espaçamento (§5.5): escala base 4px ---- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -33,7 +33,7 @@
   --dur-sheet-out: 180ms;
   --dur-toast: 200ms;
 
-  /* ---- Cores de cliente (§5.3) — fixas nos dois temas ---- */
+  /* ---- Cores de cliente (§5.3): fixas nos dois temas ---- */
   --client-indigo: #6c7bff;
   --client-rosa: #f26d9c;
   --client-turquesa: #3fc7c0;
@@ -44,7 +44,7 @@
   --client-areia: #d4a94e;
 }
 
-/* ---- Tema escuro (padrão) — §5.1 ---- */
+/* ---- Tema escuro (padrão): §5.1 ---- */
 :root,
 [data-theme='dark'] {
   color-scheme: dark;
@@ -76,7 +76,7 @@
   --zebra: rgba(255, 255, 255, 0.03);
 }
 
-/* ---- Tema claro — §5.2 ---- */
+/* ---- Tema claro: §5.2 ---- */
 [data-theme='light'] {
   color-scheme: light;
 

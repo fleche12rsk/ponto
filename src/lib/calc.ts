@@ -3,7 +3,7 @@ import { entryValueCents } from './money'
 import { dayKeyOf, isInPeriod, type Period } from './time'
 
 /* ============================================================
-   Agregações — totais por período, cliente e projeto
+   Agregações: totais por período, cliente e projeto
    ============================================================ */
 
 /** Alternância "A cobrar | Faturado | Tudo" do Resumo (§4.5). */
@@ -167,7 +167,7 @@ export function groupByDay(entries: TimeEntry[]): DayGroup[] {
     }))
 }
 
-/** Total lançado hoje — rodapé de contexto do Cronômetro (§4.1). */
+/** Total lançado hoje: rodapé de contexto do Cronômetro (§4.1). */
 export function todayTotals(db: Database): Totals {
   const today = dayKeyOf(new Date())
   return sumEntries(closedEntries(db).filter((e) => dayKeyOf(e.started_at) === today))
