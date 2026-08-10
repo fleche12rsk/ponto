@@ -30,7 +30,7 @@ export function TabBar({
           aria-current={active === id ? 'page' : undefined}
           onClick={() => onChange(id)}
         >
-          <Icon size={26} strokeWidth={active === id ? 2 : 1.75} aria-hidden="true" />
+          <Icon size={22} strokeWidth={active === id ? 2 : 1.75} aria-hidden="true" />
           <span className="t-micro">{label}</span>
         </button>
       ))}

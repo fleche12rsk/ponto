@@ -4,21 +4,36 @@
    ============================================================ */
 
 :root {
-  /* ---- Espaçamento (§5.5): escala base 4px ---- */
+  /*
+    ---- Espaçamento (§5.5): escala base 4px ----
+    Os degraus grandes vieram ~25% menores que o documento (24/32/48/64).
+    A escala do §5 foi desenhada sem aparelho na mão e, num celular de
+    verdade, deixava o app arejado demais: pouca informação por tela e muito
+    rolar. Os degraus pequenos ficaram, porque são o que cola ícone a texto.
+  */
   --space-1: 4px;
   --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-8: 48px;
-  --space-10: 64px;
+  --space-3: 10px;
+  --space-4: 14px;
+  --space-5: 18px;
+  --space-6: 24px;
+  --space-8: 36px;
+  --space-10: 48px;
 
   /* ---- Raios (§5.6) ---- */
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 20px;
+  --radius-lg: 18px;
   --radius-pill: 999px;
+
+  /*
+    ---- Alturas de controle ----
+    48px é o piso: abaixo disso o alvo de toque quebra a §11. O que dava para
+    encolher foi a folga acima desse piso.
+  */
+  --control-h: 48px;
+  --control-h-lg: 54px;
+  --row-h: 54px;
 
   /* ---- Tipografia (§5.4) ---- */
   --font-serif: 'Source Serif 4', Georgia, serif;

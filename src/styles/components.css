@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  min-height: 52px;
+  min-height: var(--control-h);
   padding: 0 var(--space-5);
   border-radius: var(--radius-md);
   font-size: 14px;
@@ -53,10 +53,10 @@
   box-shadow: none;
 }
 
-/* Grande (timer): altura 64px, largura quase total */
+/* Grande (timer): a ação principal da tela, largura quase total */
 .btn-lg {
-  min-height: 64px;
-  font-size: 16px;
+  min-height: var(--control-h-lg);
+  font-size: 15px;
   font-weight: 600;
   border-radius: var(--radius-lg);
 }
@@ -150,7 +150,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 52px;
+  min-height: var(--control-h);
   padding: 0 var(--space-3);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -208,7 +208,7 @@
 
 textarea.field-input {
   resize: none;
-  min-height: 52px;
+  min-height: var(--control-h);
   max-height: 112px; /* ~4 linhas */
 }
 
@@ -353,7 +353,7 @@ textarea.field-input {
   align-items: center;
   gap: var(--space-3);
   width: 100%;
-  min-height: 64px;
+  min-height: var(--row-h);
   padding: var(--space-3);
   text-align: left;
   background: var(--bg);
@@ -384,6 +384,19 @@ textarea.field-input {
   background: var(--danger);
   color: var(--on-amber);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  /*
+    Fica escondido até o deslize. Sem isso, os cantos arredondados da linha
+    deixam escapar duas fatias vermelhas na borda direita, e a lista parece
+    ter um erro em cada registro.
+  */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-press) var(--ease-standard);
+}
+
+.entry-row.is-swiped .entry-delete {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Realce do registro recém-salvo: esmaece em 600ms (§7) */
@@ -535,7 +548,7 @@ textarea.field-input {
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  min-height: 56px;
+  min-height: 52px;
   padding: var(--space-2) var(--space-1);
   color: var(--text-3);
   transition:
@@ -856,7 +869,7 @@ textarea.field-input {
   align-items: center;
   gap: var(--space-3);
   width: 100%;
-  min-height: 56px;
+  min-height: var(--control-h);
   padding: var(--space-3);
   text-align: left;
   border-radius: var(--radius-md);
@@ -878,7 +891,7 @@ textarea.field-input {
   align-items: center;
   gap: var(--space-3);
   width: 100%;
-  min-height: 56px;
+  min-height: var(--control-h);
   padding: var(--space-3) 0;
   text-align: left;
 }

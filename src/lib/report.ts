@@ -124,7 +124,10 @@ function rangeLabel(entry: TimeEntry): string {
   return `${formatTime(entry.started_at)}–${formatTime(entry.ended_at)}`
 }
 
-/** Uma tarifa só para todos os projetos do cliente, ou null se variarem. */
+/**
+ * Uma tarifa só para todos os projetos do cliente, ou null se variarem —
+ * caso em que o valor aparece projeto a projeto na tabela, não no cabeçalho.
+ */
 function uniformRateLabel(
   db: Database,
   client: Client | undefined,
@@ -132,9 +135,7 @@ function uniformRateLabel(
 ): string | null {
   if (!client) return null
   const rates = new Set(
-    db.projects
-      .filter((p) => projectIds.has(p.id))
-      .map((p) => effectiveRate(p, client)),
+    db.projects.filter((p) => projectIds.has(p.id)).map(effectiveRate),
   )
   if (rates.size !== 1) return null
   return formatMoney([...rates][0], db.settings.currency)

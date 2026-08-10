@@ -1,5 +1,5 @@
 import { Preferences } from '@capacitor/preferences'
-import { EMPTY_DB, DEFAULT_SETTINGS, type Database } from './types'
+import { EMPTY_DB, DEFAULT_SETTINGS, type Client, type Database } from './types'
 
 /**
  * Persistência local. Sem servidor, sem login, sem sincronização (§9).
@@ -13,6 +13,9 @@ import { EMPTY_DB, DEFAULT_SETTINGS, type Database } from './types'
 
 const KEY = 'ponto.db.v1'
 
+/** Versão atual do formato. Subir junto com uma migração em `migrate`. */
+const SCHEMA_VERSION = 2
+
 /** Serializa gravações para que dois saves concorrentes não se sobrescrevam. */
 let writeChain: Promise<void> = Promise.resolve()
 
@@ -24,18 +27,60 @@ export async function loadDb(): Promise<Database> {
     const parsed = JSON.parse(value) as Partial<Database>
     // Mescla defeitos de versões antigas com os padrões, para nunca cair em
     // undefined depois de uma atualização do app.
-    return {
+    return migrate({
       version: parsed.version ?? 1,
       clients: parsed.clients ?? [],
       projects: parsed.projects ?? [],
       entries: parsed.entries ?? [],
       running: parsed.running ?? null,
       settings: { ...DEFAULT_SETTINGS, ...(parsed.settings ?? {}) },
-    }
+    })
   } catch {
     // Um JSON corrompido não pode impedir o app de abrir.
     return structuredClone(EMPTY_DB)
   }
+}
+
+/**
+ * Leva bancos antigos para o formato atual. Roda na leitura, então quem
+ * atualiza o app não perde nada e não precisa fazer nada.
+ */
+function migrate(db: Database): Database {
+  let next = db
+
+  /*
+    v1 → v2: o valor por hora saiu do cliente e passou a morar só no projeto.
+    Projetos que herdavam a tarifa do cliente (rate_cents null) recebem agora
+    o valor que o cliente tinha — o que eles já cobravam na prática, só que
+    agora escrito no lugar certo.
+  */
+  if (next.version < 2) {
+    const legacyRate = new Map<string, number>()
+    for (const client of next.clients as (Client & { default_rate_cents?: number })[]) {
+      if (typeof client.default_rate_cents === 'number') {
+        legacyRate.set(client.id, client.default_rate_cents)
+      }
+    }
+
+    next = {
+      ...next,
+      version: 2,
+      clients: next.clients.map((c) => {
+        const { ...rest } = c as Client & { default_rate_cents?: number }
+        delete (rest as { default_rate_cents?: number }).default_rate_cents
+        return rest as Client
+      }),
+      projects: next.projects.map((p) => ({
+        ...p,
+        rate_cents:
+          typeof p.rate_cents === 'number'
+            ? p.rate_cents
+            : (legacyRate.get(p.client_id) ?? next.settings.default_rate_cents),
+      })),
+    }
+  }
+
+  return next.version === SCHEMA_VERSION ? next : { ...next, version: SCHEMA_VERSION }
 }
 
 export function saveDb(db: Database): Promise<void> {

@@ -3,6 +3,12 @@ dist/
 *.local
 .DS_Store
 
+# Configuração local de ferramenta, não é código do projeto.
+.claude/
+
+# Cache incremental do TypeScript: gerado, muda a cada compilação.
+*.tsbuildinfo
+
 # Android
 android/.gradle/
 android/build/

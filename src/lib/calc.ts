@@ -14,10 +14,9 @@ export function matchesScope(entry: TimeEntry, scope: Scope): boolean {
   return scope === 'invoiced' ? entry.invoiced : !entry.invoiced
 }
 
-/** Valor/hora efetivo: o do projeto, ou o do cliente se o projeto não tiver. */
-export function effectiveRate(project: Project, client: Client | undefined): number {
-  if (project.rate_cents !== null) return project.rate_cents
-  return client?.default_rate_cents ?? 0
+/** Valor/hora do projeto. Não existe herança: a tarifa é do projeto (§9). */
+export function effectiveRate(project: Project): number {
+  return project.rate_cents
 }
 
 /** Registros fechados (o timer em andamento não entra em nenhum total). */

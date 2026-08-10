@@ -7,7 +7,7 @@ Tudo fica no celular. Sem servidor, sem login, sem internet.
 - **Stack:** React 18 + TypeScript + Vite, empacotado com Capacitor 7
 - **Plataformas:** Android (pronto), iOS (mesmo código, falta só compilar num Mac)
 
-O nome vem do "bater ponto" — e do ícone, que são literalmente os dois pontos de um relógio digital.
+O nome vem do "bater ponto" e do ícone, que são literalmente os dois pontos de um relógio digital.
 
 ---
 
@@ -107,7 +107,7 @@ Onde o documento de design deixou espaço técnico, estas foram as escolhas e o 
 
 **Fontes do PDF.** O PDF usa Times/Helvetica/Courier em vez de Source Serif 4/Public Sans/IBM Plex Mono. São vetoriais, universais e não somam megabytes de fonte embutida ao APK; o papel de cada uma (serifada nos títulos, mono nos números tabulares) é o mesmo do §5.4. A interface do app usa as fontes especificadas, empacotadas localmente.
 
-**Persistência em JSON, não SQLite.** O §9 permitia os dois. Um freelancer gera algo como mil registros por ano — guardar o banco inteiro como um JSON no Capacitor Preferences é suficiente, mantém a leitura síncrona e evita a complexidade de migrações de schema. A troca por SQLite, se um dia fizer sentido, é isolada em `lib/db.ts`.
+**Persistência em JSON, não SQLite.** O §9 permitia os dois. Um freelancer gera algo como mil registros por ano, guardar o banco inteiro como um JSON no Capacitor Preferences é suficiente, mantém a leitura síncrona e evita a complexidade de migrações de schema. A troca por SQLite, se um dia fizer sentido, é isolada em `lib/db.ts`.
 
 **`minSdk 26` (Android 8).** Piso do ícone adaptável, e cobre praticamente todo aparelho em uso.
 

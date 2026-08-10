@@ -20,7 +20,7 @@ import { projectLabel, todayTotals } from '../lib/calc'
 import { formatDuration } from '../lib/time'
 import { lastUsedProjectId } from '../lib/recent'
 
-type SheetKind = 'pick' | 'finish' | 'manual' | 'new-client' | 'new-project' | null
+type SheetKind = 'pick' | 'finish' | 'manual' | 'new-client' | null
 
 /**
  * Agora: tela principal do cronômetro (§4.1).
@@ -33,7 +33,13 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
 
   const [selected, setSelected] = useState<string | null>(() => lastUsedProjectId(db))
   const [sheet, setSheet] = useState<SheetKind>(null)
-  const [newClientId, setNewClientId] = useState<string | null>(null)
+  /*
+    A folha de projeto tem estado próprio, e não um valor de `sheet`, porque
+    ela é encadeada: o ClientSheet chama onSaved e depois onClose, e as duas
+    escreveriam no mesmo estado — o onClose venceria e a folha de projeto
+    nunca abriria, prendendo quem acabou de criar o primeiro cliente.
+  */
+  const [projectSheetFor, setProjectSheetFor] = useState<string | null>(null)
   const [showBgChip, setShowBgChip] = useState(false)
   const [pulse, setPulse] = useState(false)
 
@@ -81,33 +87,48 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
     setSheet(null)
   }
 
-  /* ---------- Estado vazio: sem clientes (§4.1) ---------- */
-  if (!hasClients) {
+  /*
+    Estado vazio (§4.1). Sem projeto não existe cronômetro, então a tela fica
+    vazia tanto sem cliente nenhum quanto com cliente e nenhum projeto — e nos
+    dois casos precisa oferecer o próximo passo, não só informar que falta.
+  */
+  if (!hasProjects) {
     return (
       <section className="screen">
         <div className="screen-body">
-          <Empty
-            title="Comece a medir seu tempo"
-            body="Crie um cliente e um projeto para dar o primeiro play."
-            action={
-              <Button onClick={() => setSheet('new-client')}>Criar primeiro cliente</Button>
-            }
-          />
+          {hasClients ? (
+            <Empty
+              title="Falta um projeto"
+              body="O cronômetro conta o tempo de um projeto. Crie um para poder começar."
+              action={
+                <Button onClick={() => setProjectSheetFor(db.clients[0].id)}>
+                  Criar projeto
+                </Button>
+              }
+            />
+          ) : (
+            <Empty
+              title="Comece a medir seu tempo"
+              body="Crie um cliente e um projeto para dar o primeiro play."
+              action={
+                <Button onClick={() => setSheet('new-client')}>Criar primeiro cliente</Button>
+              }
+            />
+          )}
         </div>
+
         {sheet === 'new-client' && (
           <ClientSheet
             onClose={() => setSheet(null)}
-            onSaved={(client) => {
-              setNewClientId(client.id)
-              setSheet('new-project')
-            }}
+            onSaved={(client) => setProjectSheetFor(client.id)}
           />
         )}
-        {sheet === 'new-project' && newClientId && (
+
+        {projectSheetFor && (
           <ProjectSheet
-            clientId={newClientId}
+            clientId={projectSheetFor}
             title="Criar um projeto"
-            onClose={() => setSheet(null)}
+            onClose={() => setProjectSheetFor(null)}
             onSaved={(project) => {
               setSelected(project.id)
               setPulse(true)
@@ -143,9 +164,9 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
             alignItems: 'center',
             justifyContent: 'center',
             gap: 'var(--space-5)',
-            paddingTop: 'var(--space-6)',
-            paddingBottom: 'var(--space-8)',
-            minHeight: 260,
+            paddingTop: 'var(--space-5)',
+            paddingBottom: 'var(--space-6)',
+            minHeight: 210,
           }}
         >
           <TimerDisplay

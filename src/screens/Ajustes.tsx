@@ -47,7 +47,7 @@ export function Ajustes({ onAbout }: { onAbout: () => void }) {
             prefix="R$"
             inputMode="decimal"
             placeholder="0,00"
-            hint="Usado ao criar um cliente novo."
+            hint="Preenche o campo de valor ao criar um projeto novo."
             onChange={(e) => setRate(e.target.value)}
             onBlur={() => updateSettings({ default_rate_cents: parseMoneyToCents(rate) })}
           />

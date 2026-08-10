@@ -111,10 +111,6 @@ export function ClienteDetalhe({
           </div>
         </div>
 
-        <p className="t-caption c-3" style={{ marginBottom: 'var(--space-5)' }}>
-          Valor por hora do cliente: {formatMoney(client.default_rate_cents, db.settings.currency)}
-        </p>
-
         <Button block onClick={onReport}>
           <FileText size={18} aria-hidden="true" /> Gerar relatório
         </Button>

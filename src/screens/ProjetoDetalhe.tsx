@@ -52,7 +52,7 @@ export function ProjetoDetalhe({
     )
   }
 
-  const rate = effectiveRate(project, client)
+  const rate = effectiveRate(project)
   const budget = project.budget_seconds
   const progress = budget ? totals.seconds / budget : null
   const overBy = budget ? Math.max(0, totals.seconds - budget) : 0
@@ -118,7 +118,6 @@ export function ProjetoDetalhe({
 
         <p className="t-caption c-3">
           Valor por hora: {formatMoney(rate, db.settings.currency)}
-          {project.rate_cents === null ? ' (herdado do cliente)' : ''}
         </p>
 
         <div className="section">

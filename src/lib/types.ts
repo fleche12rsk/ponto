@@ -24,7 +24,6 @@ export interface Client {
   name: string
   /** Uma das 8 cores fixas de CLIENT_COLORS. */
   color: string
-  default_rate_cents: number
   created_at: string
   archived: boolean
 }
@@ -33,8 +32,14 @@ export interface Project {
   id: string
   client_id: string
   name: string
-  /** null = herda default_rate_cents do cliente. */
-  rate_cents: number | null
+  /**
+   * O valor por hora mora aqui e em nenhum outro lugar.
+   *
+   * O mesmo cliente costuma contratar serviços diferentes — site e motion,
+   * por exemplo — que valem preços diferentes. Uma tarifa por cliente
+   * obrigaria a inventar exceções; uma tarifa por projeto já é a resposta.
+   */
+  rate_cents: number
   /** Horas orçadas, em segundos. null = sem orçamento. */
   budget_seconds: number | null
   created_at: string
@@ -77,6 +82,7 @@ export type ThemePref = 'light' | 'dark' | 'system'
 export type WeekStart = 'sunday' | 'monday'
 
 export interface Settings {
+  /** Preenche o campo de valor ao criar um projeto novo. */
   default_rate_cents: number
   currency: string
   week_start: WeekStart
@@ -109,7 +115,7 @@ export const DEFAULT_SETTINGS: Settings = {
 }
 
 export const EMPTY_DB: Database = {
-  version: 1,
+  version: 2,
   clients: [],
   projects: [],
   entries: [],

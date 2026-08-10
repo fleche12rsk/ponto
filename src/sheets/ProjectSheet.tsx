@@ -28,8 +28,10 @@ export function ProjectSheet({
   const client = db.clients.find((c) => c.id === clientId)
 
   const [name, setName] = useState(project?.name ?? '')
+  // Projeto novo já nasce com o valor padrão dos Ajustes preenchido: o campo
+  // nunca fica vazio escondendo uma herança invisível.
   const [rate, setRate] = useState(
-    project?.rate_cents != null ? formatMoneyPlain(project.rate_cents) : '',
+    formatMoneyPlain(project?.rate_cents ?? db.settings.default_rate_cents),
   )
   const [budget, setBudget] = useState(
     project?.budget_seconds ? formatDuration(project.budget_seconds, { short: true }) : '',
@@ -43,12 +45,14 @@ export function ProjectSheet({
       ? 'Não entendi. Tente "15h" ou "15h30".'
       : null
 
+  const rateCents = parseMoneyToCents(rate)
+  const rateError = touched && rateCents <= 0 ? 'Informe quanto você cobra por hora.' : null
+
   function save() {
     setTouched(true)
     if (!name.trim()) return
+    if (rateCents <= 0) return
     if (budget.trim() && budgetSeconds === null) return
-
-    const rateCents = rate.trim() ? parseMoneyToCents(rate) : null
 
     if (project) {
       updateProject(project.id, {
@@ -58,18 +62,17 @@ export function ProjectSheet({
       })
       onSaved?.({ ...project, name: name.trim(), rate_cents: rateCents, budget_seconds: budgetSeconds })
     } else {
-      const created = addProject({
-        client_id: clientId,
-        name: name.trim(),
-        rate_cents: rateCents,
-        budget_seconds: budgetSeconds,
-      })
-      onSaved?.(created)
+      onSaved?.(
+        addProject({
+          client_id: clientId,
+          name: name.trim(),
+          rate_cents: rateCents,
+          budget_seconds: budgetSeconds,
+        }),
+      )
     }
     onClose()
   }
-
-  const inheritedRate = client ? formatMoneyPlain(client.default_rate_cents) : '0,00'
 
   return (
     <Sheet
@@ -99,8 +102,9 @@ export function ProjectSheet({
         value={rate}
         prefix="R$"
         inputMode="decimal"
-        placeholder={inheritedRate}
-        hint={`Vazio usa o valor do cliente: R$ ${inheritedRate}.`}
+        placeholder="0,00"
+        error={rateError}
+        hint={client ? `Quanto você cobra neste projeto do ${client.name}.` : undefined}
         onChange={(e) => setRate(e.target.value)}
       />
 

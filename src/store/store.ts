@@ -50,9 +50,17 @@ export function isReady(): boolean {
 }
 
 export async function initStore(): Promise<void> {
-  state = await loadDb()
+  const loaded = await loadDb()
+  state = loaded
   ready = true
   emit()
+
+  /*
+    `loadDb` migra na leitura, mas em memória. Gravar de volta na hora evita
+    que o formato antigo continue no disco esperando a próxima escrita — o
+    que deixaria o banco meio migrado se o app fosse fechado antes.
+  */
+  void saveDb(loaded)
 }
 
 const now = () => new Date().toISOString()
@@ -61,16 +69,11 @@ const now = () => new Date().toISOString()
    Clientes
    ============================================================ */
 
-export function addClient(input: {
-  name: string
-  color: string
-  default_rate_cents: number
-}): Client {
+export function addClient(input: { name: string; color: string }): Client {
   const client: Client = {
     id: uid(),
     name: input.name.trim(),
     color: input.color,
-    default_rate_cents: input.default_rate_cents,
     created_at: now(),
     archived: false,
   }
@@ -107,7 +110,7 @@ export function deleteClient(id: string) {
 export function addProject(input: {
   client_id: string
   name: string
-  rate_cents: number | null
+  rate_cents: number
   budget_seconds: number | null
 }): Project {
   const project: Project = {
@@ -212,7 +215,6 @@ export function stopTimer(note: string | null): TimeEntry | null {
     mutate((d) => ({ ...d, running: null }))
     return null
   }
-  const client = db.clients.find((c) => c.id === project.client_id)
 
   const entry: TimeEntry = {
     id: uid(),
@@ -223,7 +225,7 @@ export function stopTimer(note: string | null): TimeEntry | null {
     note: note?.trim() ? note.trim() : null,
     source: 'timer',
     invoiced: false,
-    rate_cents_snapshot: effectiveRate(project, client),
+    rate_cents_snapshot: effectiveRate(project),
     created_at: now(),
     updated_at: now(),
   }
@@ -245,7 +247,6 @@ export function addManualEntry(input: {
   const db = state
   const project = db.projects.find((p) => p.id === input.project_id)
   if (!project) return null
-  const client = db.clients.find((c) => c.id === project.client_id)
 
   const duration = Math.round(
     (new Date(input.ended_at).getTime() - new Date(input.started_at).getTime()) / 1000,
@@ -260,7 +261,7 @@ export function addManualEntry(input: {
     note: input.note?.trim() ? input.note.trim() : null,
     source: 'manual',
     invoiced: false,
-    rate_cents_snapshot: effectiveRate(project, client),
+    rate_cents_snapshot: effectiveRate(project),
     created_at: now(),
     updated_at: now(),
   }
