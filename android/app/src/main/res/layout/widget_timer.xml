@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Layout do widget. RemoteViews só aceita um punhado de componentes: nada de
+  ConstraintLayout, nada de CSS. Os valores de cor são fixos porque widget não
+  herda o tema do app, e o Ponto é escuro por padrão (§5.1).
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_bg"
+    android:padding="14dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/widget_project"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#F4F1EA"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/widget_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#8F8A7C"
+        android:textSize="11sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginBottom="4dp" />
+
+    <!--
+      Conta sozinho a partir da base que o provider informa. Não custa
+      atualização nenhuma nem bateria.
+    -->
+    <Chronometer
+        android:id="@+id/widget_chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFB020"
+        android:textSize="26sp"
+        android:fontFamily="monospace" />
+
+    <!-- Usado quando está pausado ou parado: o Chronometer não congela. -->
+    <TextView
+        android:id="@+id/widget_static_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFB020"
+        android:textSize="26sp"
+        android:fontFamily="monospace"
+        android:visibility="gone" />
+</LinearLayout>

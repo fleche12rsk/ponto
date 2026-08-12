@@ -91,7 +91,9 @@ export interface Settings {
   notif_end_of_day: boolean
   /** Cabeçalho do PDF (§10): quem assina o relatório. */
   freelancer_name: string
-  freelancer_contact: string
+  freelancer_email: string
+  /** Só os dígitos. A formatação `(47) 93380-1234` é do campo, não do dado. */
+  freelancer_phone: string
 }
 
 export interface Database {
@@ -111,11 +113,12 @@ export const DEFAULT_SETTINGS: Settings = {
   notif_long_timer_hours: 6,
   notif_end_of_day: true,
   freelancer_name: '',
-  freelancer_contact: '',
+  freelancer_email: '',
+  freelancer_phone: '',
 }
 
 export const EMPTY_DB: Database = {
-  version: 2,
+  version: 3,
   clients: [],
   projects: [],
   entries: [],

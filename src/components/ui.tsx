@@ -1,5 +1,7 @@
 import type { ReactNode, TextareaHTMLAttributes, InputHTMLAttributes } from 'react'
 import { ChevronRight } from 'lucide-react'
+import { formatMoneyPlain } from '../lib/money'
+import { formatPhoneBR, onlyDigits } from '../lib/phone'
 
 /* ============================================================
    Primitivas de interface: §6
@@ -95,6 +97,92 @@ export function TextField({ label, error, hint, prefix, ...input }: TextFieldPro
           </span>
         )}
         <input className="field-input" aria-label={label} {...input} />
+      </div>
+    </Field>
+  )
+}
+
+/**
+ * Campo de dinheiro com máscara de caixa eletrônico: você digita só números
+ * e eles entram pela direita. "12000" vira 120,00.
+ *
+ * O estado é o valor em centavos, nunca a string — então não existe estado
+ * intermediário inválido nem letra para escapar.
+ */
+export function MoneyField({
+  label,
+  cents,
+  onChangeCents,
+  hint,
+  error,
+  autoFocus,
+}: {
+  label: string
+  cents: number
+  onChangeCents: (cents: number) => void
+  hint?: string | null
+  error?: string | null
+  autoFocus?: boolean
+}) {
+  // R$ 999.999,99 de teto: acima disso não é valor/hora, é dedo escorregando.
+  const MAX_CENTS = 99_999_999
+
+  function handleChange(raw: string) {
+    const digits = raw.replace(/\D/g, '').slice(0, 9)
+    onChangeCents(Math.min(MAX_CENTS, digits ? Number(digits) : 0))
+  }
+
+  return (
+    <Field label={label} hint={hint} error={error}>
+      <div className={`field-box${error ? ' is-error' : ''}`}>
+        <span className="field-prefix t-body" aria-hidden="true">
+          R$
+        </span>
+        <input
+          className="field-input"
+          // "numeric" abre o teclado só de dígitos; o filtro acima é a
+          // garantia real, porque teclado é sugestão, não trava.
+          inputMode="numeric"
+          value={formatMoneyPlain(cents)}
+          aria-label={label}
+          autoFocus={autoFocus}
+          onChange={(e) => handleChange(e.target.value)}
+          // O cursor sempre no fim: com máscara da direita para a esquerda,
+          // deixar o cursor no meio faz o valor pular de um jeito errático.
+          onFocus={(e) => e.currentTarget.setSelectionRange(999, 999)}
+          onClick={(e) => e.currentTarget.setSelectionRange(999, 999)}
+        />
+      </div>
+    </Field>
+  )
+}
+
+/**
+ * Telefone com molde. Mesma ideia do MoneyField: o estado são só os dígitos,
+ * a formatação é aparência — então não existe letra para escapar.
+ */
+export function PhoneField({
+  label,
+  digits,
+  onChangeDigits,
+  hint,
+}: {
+  label: string
+  digits: string
+  onChangeDigits: (digits: string) => void
+  hint?: string | null
+}) {
+  return (
+    <Field label={label} hint={hint}>
+      <div className="field-box">
+        <input
+          className="field-input"
+          inputMode="tel"
+          value={formatPhoneBR(digits)}
+          placeholder="(00) 00000-0000"
+          aria-label={label}
+          onChange={(e) => onChangeDigits(onlyDigits(e.target.value))}
+        />
       </div>
     </Field>
   )

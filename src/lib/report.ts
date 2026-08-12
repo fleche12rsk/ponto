@@ -2,6 +2,7 @@ import type { Client, Database, TimeEntry } from './types'
 import { entryValue, effectiveRate, entriesInPeriod, type Scope } from './calc'
 import { formatDayMonth, formatRange, formatDuration, formatTime, type Period } from './time'
 import { formatMoney } from './money'
+import { formatPhoneBR } from './phone'
 
 /* ============================================================
    Modelo do relatório (§10)
@@ -102,7 +103,13 @@ export function buildReport(db: Database, options: ReportOptions): ReportModel {
 
   return {
     freelancerName: db.settings.freelancer_name || 'Relatório de horas',
-    freelancerContact: db.settings.freelancer_contact,
+    // E-mail e telefone numa linha só no cabeçalho do PDF (§10).
+    freelancerContact: [
+      db.settings.freelancer_email,
+      db.settings.freelancer_phone ? formatPhoneBR(db.settings.freelancer_phone) : '',
+    ]
+      .filter(Boolean)
+      .join(' · '),
     clientName: client?.name ?? '—',
     uniformRate: uniformRateLabel(db, client, projectIds),
     periodLabel: formatRange(options.period.start, options.period.end),

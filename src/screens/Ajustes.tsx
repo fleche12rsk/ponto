@@ -1,26 +1,24 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { ChevronRight } from 'lucide-react'
-import { Button, Segmented, Switch, TextField } from '../components/ui'
+import { Button, MoneyField, PhoneField, Segmented, Switch, TextField } from '../components/ui'
 import { Dialog } from '../components/Sheet'
 import { toast } from '../components/Toast'
 import { useDb } from '../store/useStore'
-import { eraseEverything, updateSettings } from '../store/store'
-import { exportJson } from '../lib/db'
+import { eraseEverything, replaceAll, updateSettings } from '../store/store'
+import { exportJson, parseBackup } from '../lib/db'
 import { shareCsv } from '../lib/share'
-import { formatMoneyPlain, parseMoneyToCents } from '../lib/money'
-import type { ThemePref, WeekStart } from '../lib/types'
+import type { Database, ThemePref, WeekStart } from '../lib/types'
 
 /** Ajustes (§4.11). */
 export function Ajustes({ onAbout }: { onAbout: () => void }) {
   const db = useDb()
   const s = db.settings
 
-  const [rate, setRate] = useState(
-    s.default_rate_cents > 0 ? formatMoneyPlain(s.default_rate_cents) : '',
-  )
   const [name, setName] = useState(s.freelancer_name)
-  const [contact, setContact] = useState(s.freelancer_contact)
+  const [email, setEmail] = useState(s.freelancer_email)
   const [confirmErase, setConfirmErase] = useState(false)
+  const [pendente, setPendente] = useState<Database | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   async function exportEverything() {
     try {
@@ -28,6 +26,23 @@ export function Ajustes({ onAbout }: { onAbout: () => void }) {
       toast('Backup exportado')
     } catch {
       toast('Não deu para exportar')
+    }
+  }
+
+  /*
+    O seletor de arquivo nativo do Android funciona dentro do WebView, então
+    importar não precisa de plugin nenhum: o <input type="file"> abre a mesma
+    tela de "Ficheiros" de qualquer outro app.
+  */
+  async function escolherArquivo(file: File | undefined) {
+    if (!file) return
+    try {
+      setPendente(parseBackup(await file.text()))
+    } catch (erro) {
+      toast(erro instanceof Error ? erro.message : 'Não deu para ler o arquivo')
+    } finally {
+      // Zera para dar para escolher o mesmo arquivo duas vezes seguidas.
+      if (fileRef.current) fileRef.current.value = ''
     }
   }
 
@@ -41,15 +56,11 @@ export function Ajustes({ onAbout }: { onAbout: () => void }) {
         <div className="section" style={{ marginTop: 0 }}>
           <h2 className="t-h2 c-3 section-title">Padrões</h2>
 
-          <TextField
+          <MoneyField
             label="Valor por hora padrão"
-            value={rate}
-            prefix="R$"
-            inputMode="decimal"
-            placeholder="0,00"
+            cents={s.default_rate_cents}
             hint="Preenche o campo de valor ao criar um projeto novo."
-            onChange={(e) => setRate(e.target.value)}
-            onBlur={() => updateSettings({ default_rate_cents: parseMoneyToCents(rate) })}
+            onChangeCents={(cents) => updateSettings({ default_rate_cents: cents })}
           />
 
           <div style={{ marginTop: 'var(--space-4)' }}>
@@ -90,18 +101,27 @@ export function Ajustes({ onAbout }: { onAbout: () => void }) {
           <TextField
             label="Seu nome"
             value={name}
-            placeholder="Ex.: Mauricio Sardá"
+            placeholder="Como você assina seus relatórios"
             autoCapitalize="words"
             onChange={(e) => setName(e.target.value)}
             onBlur={() => updateSettings({ freelancer_name: name.trim() })}
           />
           <TextField
-            label="Contato"
-            value={contact}
-            placeholder="E-mail ou telefone"
+            label="E-mail"
+            value={email}
+            placeholder="voce@exemplo.com"
             inputMode="email"
-            onChange={(e) => setContact(e.target.value)}
-            onBlur={() => updateSettings({ freelancer_contact: contact.trim() })}
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => updateSettings({ freelancer_email: email.trim() })}
+          />
+
+          <PhoneField
+            label="Telefone"
+            digits={s.freelancer_phone}
+            onChangeDigits={(d) => updateSettings({ freelancer_phone: d })}
           />
         </div>
 
@@ -144,9 +164,30 @@ export function Ajustes({ onAbout }: { onAbout: () => void }) {
 
         <div className="section">
           <h2 className="t-h2 c-3 section-title">Dados</h2>
+          <p className="t-caption c-3" style={{ marginBottom: 'var(--space-3)' }}>
+            O backup é um arquivo com tudo: clientes, projetos, registros e ajustes.
+            Guarde numa nuvem se trocar de celular.
+          </p>
+
           <Button variant="secondary" block onClick={exportEverything}>
             Exportar tudo
           </Button>
+
+          <div style={{ marginTop: 'var(--space-3)' }}>
+            <Button variant="secondary" block onClick={() => fileRef.current?.click()}>
+              Importar backup
+            </Button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="application/json,.json"
+              style={{ display: 'none' }}
+              aria-hidden="true"
+              tabIndex={-1}
+              onChange={(e) => void escolherArquivo(e.target.files?.[0])}
+            />
+          </div>
+
           <div style={{ marginTop: 'var(--space-3)' }}>
             <Button variant="danger" block onClick={() => setConfirmErase(true)}>
               Apagar tudo
@@ -161,6 +202,22 @@ export function Ajustes({ onAbout }: { onAbout: () => void }) {
           </button>
         </div>
       </div>
+
+      {pendente && (
+        <Dialog
+          title="Substituir tudo pelo backup?"
+          body={`O backup tem ${pendente.clients.length} ${pendente.clients.length === 1 ? 'cliente' : 'clientes'} e ${pendente.entries.length} ${pendente.entries.length === 1 ? 'registro' : 'registros'}. O que está no app agora será apagado.`}
+          cancelLabel="Cancelar"
+          confirmLabel="Substituir"
+          destructive
+          onCancel={() => setPendente(null)}
+          onConfirm={() => {
+            replaceAll(pendente)
+            setPendente(null)
+            toast('Backup importado')
+          }}
+        />
+      )}
 
       {confirmErase && (
         <Dialog

@@ -8,6 +8,15 @@ import type { Database } from './types'
  * apontar para um projeto já apagado.
  */
 export function lastUsedProjectId(db: Database): string | null {
+  /*
+    O cronômetro em andamento manda mais que o histórico. Sem isto, abrir
+    "Lançar horas" com um timer rodando sugeria outro projeto — o último que
+    virou registro — e a tela contradizia o que estava na tela ao lado.
+  */
+  if (db.running && db.projects.some((p) => p.id === db.running!.project_id)) {
+    return db.running.project_id
+  }
+
   let bestId: string | null = null
   let bestTime = -Infinity
 

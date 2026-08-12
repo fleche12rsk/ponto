@@ -639,7 +639,7 @@ textarea.field-input {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-4) var(--space-2);
+  padding: var(--space-3) var(--space-5) var(--space-2);
   color: var(--text-3);
   flex: none;
 }
@@ -648,14 +648,14 @@ textarea.field-input {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding: var(--space-2) var(--space-4) var(--space-4);
+  padding: var(--space-2) var(--space-5) var(--space-4);
 }
 
 .sheet-footer {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-4) var(--space-4);
+  padding: var(--space-3) var(--space-5) var(--space-4);
   border-top: 1px solid var(--line);
   flex: none;
 }
@@ -844,13 +844,23 @@ textarea.field-input {
 
 /* ---------- Estados vazios ---------- */
 
+/*
+  O estado vazio ocupa a tela inteira e se centraliza nela. Encostado no topo
+  com um vão embaixo, ele parecia conteúdo que não terminou de carregar.
+*/
 .empty {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   gap: var(--space-3);
-  padding: var(--space-10) var(--space-4) var(--space-8);
+  min-height: 100%;
+  /*
+    Assimetria proposital: o .screen-body já reserva espaço embaixo, e sem
+    compensar isso o bloco fica visivelmente acima do centro da tela.
+  */
+  padding: var(--space-10) var(--space-4) var(--space-3);
 }
 
 .empty p {

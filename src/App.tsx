@@ -17,9 +17,11 @@ import { ProjetoDetalhe } from './screens/ProjetoDetalhe'
 import { Relatorio } from './screens/Relatorio'
 
 import { useDb } from './store/useStore'
+import { reloadFromDisk } from './store/store'
 import { handleBack } from './lib/backstack'
 import { currentMonth, type Period } from './lib/time'
 import { syncEndOfDayReminder, syncTimerNotifications } from './lib/notifications'
+import { refreshWidget } from './lib/widget'
 
 /** Telas empilhadas: as que aprofundam e têm botão de voltar (§3). */
 type StackEntry =
@@ -65,15 +67,33 @@ export function App() {
     return () => media.removeEventListener('change', apply)
   }, [db.settings.theme])
 
+  /* ---------- Voltar do segundo plano: reler o disco ---------- */
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return
+
+    const listener = CapApp.addListener('appStateChange', ({ isActive }) => {
+      // O widget de início rápido pode ter começado um cronômetro enquanto o
+      // app estava fechado. Sem reler, a próxima gravação apagaria isso.
+      if (isActive) void reloadFromDisk()
+    })
+
+    return () => {
+      void listener.then((l) => l.remove())
+    }
+  }, [])
+
   /* ---------- Splash: some assim que a primeira tela está pronta (§12) ---------- */
   useEffect(() => {
     if (!Capacitor.isNativePlatform()) return
     void SplashScreen.hide().catch(() => {})
   }, [])
 
-  /* ---------- Notificações ---------- */
+  /* ---------- Notificações e widget ---------- */
   useEffect(() => {
     void syncTimerNotifications(db)
+    // O widget da tela inicial lê o mesmo armazenamento; só precisa saber
+    // que chegou a hora de reler.
+    void refreshWidget()
   }, [db.running?.project_id, db.running?.state, db.settings.notif_long_timer_hours, db])
 
   useEffect(() => {

@@ -24,6 +24,46 @@
 
         </activity>
 
+        <!-- Widget do cronômetro. exported=false porque só o próprio app o
+             atualiza; nenhum outro aplicativo precisa alcançá-lo. -->
+        <receiver
+            android:name=".PontoWidget"
+            android:label="@string/widget_timer_name"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_timer_info" />
+        </receiver>
+
+        <receiver
+            android:name=".TodayWidget"
+            android:label="@string/widget_today_name"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_today_info" />
+        </receiver>
+
+        <receiver
+            android:name=".QuickStartWidget"
+            android:label="@string/widget_quick_name"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <!-- Toque num atalho: começa a contar aquele projeto. -->
+                <action android:name="dev.micio.ponto.QUICK_START" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_quick_start_info" />
+        </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

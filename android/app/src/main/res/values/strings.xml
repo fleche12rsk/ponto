@@ -4,4 +4,15 @@
     <string name="title_activity_main">Ponto</string>
     <string name="package_name">dev.micio.ponto</string>
     <string name="custom_url_scheme">dev.micio.ponto</string>
+
+    <string name="widget_timer_name">Cronômetro</string>
+    <string name="widget_description">Mostra o projeto em andamento e o tempo correndo.</string>
+
+    <string name="widget_today_name">Hoje</string>
+    <string name="widget_today_label">HOJE</string>
+    <string name="widget_today_description">Horas e valor que você já fez hoje.</string>
+
+    <string name="widget_quick_name">Início rápido</string>
+    <string name="widget_quick_description">Comece a contar um projeto sem abrir o app.</string>
+    <string name="widget_quick_empty">Crie um projeto no app para ele aparecer aqui.</string>
 </resources>

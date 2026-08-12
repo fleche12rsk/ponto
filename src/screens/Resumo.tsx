@@ -210,6 +210,11 @@ export function Resumo({
           entry={editing}
           onClose={() => setEditing(null)}
           onSaved={() => toast('Registro salvo')}
+          onDelete={() => {
+            const alvo = editing
+            setEditing(null)
+            setDeleting(alvo)
+          }}
         />
       )}
 

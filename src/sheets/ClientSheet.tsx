@@ -35,7 +35,10 @@ export function ClientSheet({
       updateClient(client.id, { name: name.trim(), color })
       onSaved?.({ ...client, name: name.trim(), color })
     } else {
-      onSaved?.(addClient({ name: name.trim(), color }))
+      // Mesmo cuidado do ProjectSheet: `onSaved?.(addClient(...))` não
+      // executaria o addClient quando onSaved fosse undefined.
+      const created = addClient({ name: name.trim(), color })
+      onSaved?.(created)
     }
     onClose()
   }

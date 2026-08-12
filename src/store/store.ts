@@ -305,3 +305,22 @@ export async function eraseEverything() {
   await clearDb()
   commit(structuredClone(EMPTY_DB))
 }
+
+/** Substitui tudo pelo conteúdo de um backup. Sem volta. */
+export function replaceAll(db: Database) {
+  commit(db)
+}
+
+/**
+ * Relê o disco sem gravar nada.
+ *
+ * O widget de início rápido também escreve no armazenamento, então o app
+ * deixou de ser o único autor dos dados. Ao voltar do segundo plano ele
+ * precisa reler — senão a próxima gravação sobrescreveria com o estado que
+ * ficou parado em memória, e o cronômetro iniciado pelo widget sumiria.
+ */
+export async function reloadFromDisk(): Promise<void> {
+  const fresh = await loadDb()
+  state = fresh
+  emit()
+}

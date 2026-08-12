@@ -5,6 +5,8 @@ dist/
 
 # Configuração local de ferramenta, não é código do projeto.
 .claude/
+.idea/
+android/.idea/
 
 # Cache incremental do TypeScript: gerado, muda a cada compilação.
 *.tsbuildinfo

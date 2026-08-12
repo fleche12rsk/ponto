@@ -162,6 +162,11 @@ export function ProjetoDetalhe({
           entry={editingEntry}
           onClose={() => setEditingEntry(null)}
           onSaved={() => toast('Registro salvo')}
+          onDelete={() => {
+            const alvo = editingEntry
+            setEditingEntry(null)
+            setDeletingEntry(alvo)
+          }}
         />
       )}
 

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { Sheet } from '../components/Sheet'
-import { Button, TextField } from '../components/ui'
+import { Button, MoneyField, TextField } from '../components/ui'
 import type { Project } from '../lib/types'
-import { formatMoneyPlain, parseMoneyToCents } from '../lib/money'
 import { formatDuration, parseHoursToSeconds } from '../lib/time'
 import { addProject, updateProject } from '../store/store'
 import { useDb } from '../store/useStore'
@@ -30,8 +29,8 @@ export function ProjectSheet({
   const [name, setName] = useState(project?.name ?? '')
   // Projeto novo já nasce com o valor padrão dos Ajustes preenchido: o campo
   // nunca fica vazio escondendo uma herança invisível.
-  const [rate, setRate] = useState(
-    formatMoneyPlain(project?.rate_cents ?? db.settings.default_rate_cents),
+  const [rateCents, setRateCents] = useState(
+    project?.rate_cents ?? db.settings.default_rate_cents,
   )
   const [budget, setBudget] = useState(
     project?.budget_seconds ? formatDuration(project.budget_seconds, { short: true }) : '',
@@ -45,7 +44,6 @@ export function ProjectSheet({
       ? 'Não entendi. Tente "15h" ou "15h30".'
       : null
 
-  const rateCents = parseMoneyToCents(rate)
   const rateError = touched && rateCents <= 0 ? 'Informe quanto você cobra por hora.' : null
 
   function save() {
@@ -62,14 +60,19 @@ export function ProjectSheet({
       })
       onSaved?.({ ...project, name: name.trim(), rate_cents: rateCents, budget_seconds: budgetSeconds })
     } else {
-      onSaved?.(
-        addProject({
-          client_id: clientId,
-          name: name.trim(),
-          rate_cents: rateCents,
-          budget_seconds: budgetSeconds,
-        }),
-      )
+      /*
+        O `addProject` fica FORA do `onSaved?.()` de propósito. Encadeamento
+        opcional curto-circuita a expressão inteira quando o callback é
+        undefined, argumentos inclusive — e a tela de detalhe do cliente não
+        passa onSaved, então o projeto simplesmente não era criado.
+      */
+      const created = addProject({
+        client_id: clientId,
+        name: name.trim(),
+        rate_cents: rateCents,
+        budget_seconds: budgetSeconds,
+      })
+      onSaved?.(created)
     }
     onClose()
   }
@@ -97,28 +100,28 @@ export function ProjectSheet({
         onChange={(e) => setName(e.target.value)}
       />
 
-      <TextField
+      <MoneyField
         label="Valor por hora"
-        value={rate}
-        prefix="R$"
-        inputMode="decimal"
-        placeholder="0,00"
+        cents={rateCents}
+        onChangeCents={setRateCents}
         error={rateError}
         hint={client ? `Quanto você cobra neste projeto do ${client.name}.` : undefined}
-        onChange={(e) => setRate(e.target.value)}
       />
 
       <TextField
         label="Horas orçadas"
         value={budget}
         placeholder="Ex.: 15h"
+        inputMode="numeric"
         error={budgetError}
         hint={
           budgetSeconds
             ? `Equivale a ${formatDuration(budgetSeconds)}.`
             : 'Opcional. Serve para avisar quando o projeto passar do combinado.'
         }
-        onChange={(e) => setBudget(e.target.value)}
+        // Só dígitos e o "h" que separa horas de minutos: "15h30". Qualquer
+        // outra letra é engano de teclado, não intenção.
+        onChange={(e) => setBudget(e.target.value.replace(/[^\dh]/gi, '').toLowerCase())}
       />
     </Sheet>
   )

@@ -27,17 +27,23 @@ const DAY_SECONDS = 24 * 60 * 60
  */
 export function ManualEntrySheet({
   entry,
+  defaultProjectId,
   onClose,
   onSaved,
+  onDelete,
 }: {
   entry?: TimeEntry
+  /** O projeto que a tela de origem está mostrando, para não divergir dela. */
+  defaultProjectId?: string | null
   onClose: () => void
   onSaved?: (entryId: string) => void
+  /** Só editando. Apagar por aqui é o caminho descobrível; o deslize é atalho. */
+  onDelete?: () => void
 }) {
   const db = useDb()
 
   const [projectId, setProjectId] = useState<string | null>(
-    entry?.project_id ?? lastUsedProjectId(db),
+    entry?.project_id ?? defaultProjectId ?? lastUsedProjectId(db),
   )
   const [mode, setMode] = useState<Mode>('range')
   const [date, setDate] = useState(
@@ -140,9 +146,15 @@ export function ManualEntrySheet({
       onClose={onClose}
       footer={
         <>
-          <Button variant="text" onClick={onClose}>
-            Cancelar
-          </Button>
+          {entry && onDelete ? (
+            <Button variant="danger" onClick={onDelete}>
+              Apagar
+            </Button>
+          ) : (
+            <Button variant="text" onClick={onClose}>
+              Cancelar
+            </Button>
+          )}
           <div className="grow" />
           <Button onClick={save}>Salvar</Button>
         </>
@@ -219,8 +231,9 @@ export function ManualEntrySheet({
           label="Duração"
           value={durationText}
           placeholder="Ex.: 3h30"
-          inputMode="text"
-          onChange={(e) => setDurationText(e.target.value)}
+          inputMode="numeric"
+          // Mesmo filtro do campo de horas orçadas: dígitos e o "h".
+          onChange={(e) => setDurationText(e.target.value.replace(/[^\dh]/gi, '').toLowerCase())}
         />
       )}
 

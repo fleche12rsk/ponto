@@ -163,9 +163,9 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 'var(--space-5)',
+            gap: 'var(--space-6)',
             paddingTop: 'var(--space-5)',
-            paddingBottom: 'var(--space-6)',
+            paddingBottom: 'var(--space-8)',
             minHeight: 210,
           }}
         >
@@ -185,11 +185,11 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
             className="row"
             style={{
               maxWidth: '100%',
-              padding: 'var(--space-3) var(--space-4)',
+              padding: 'var(--space-4) var(--space-6)',
               borderRadius: 'var(--radius-pill)',
               background: 'var(--surface)',
               border: '1px solid var(--line)',
-              minHeight: 48,
+              minHeight: 56,
             }}
             onClick={() => setSheet('pick')}
             aria-label={
@@ -284,6 +284,8 @@ export function Agora({ onNewEntry }: { onNewEntry: (entryId: string) => void })
 
       {sheet === 'manual' && (
         <ManualEntrySheet
+          // Abre já no projeto que o cronômetro está mostrando.
+          defaultProjectId={activeProjectId}
           onClose={() => setSheet(null)}
           onSaved={(id) => {
             onNewEntry(id)

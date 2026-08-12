@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Início rápido. Quatro linhas fixas em vez de lista: RemoteViews só faz lista
+  com um serviço próprio, e quatro atalhos já cobrem o uso real.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quick_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/widget_bg"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/quick_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#8F8A7C"
+        android:textSize="10sp"
+        android:letterSpacing="0.06"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="6dp" />
+
+    <TextView
+        android:id="@+id/quick_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/widget_quick_empty"
+        android:textColor="#B8B3A7"
+        android:textSize="13sp"
+        android:padding="8dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/quick_slot_0"
+        style="@style/QuickSlot">
+        <TextView android:id="@+id/quick_name_0" style="@style/QuickName" />
+        <TextView android:id="@+id/quick_client_0" style="@style/QuickClient" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/quick_slot_1"
+        style="@style/QuickSlot">
+        <TextView android:id="@+id/quick_name_1" style="@style/QuickName" />
+        <TextView android:id="@+id/quick_client_1" style="@style/QuickClient" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/quick_slot_2"
+        style="@style/QuickSlot">
+        <TextView android:id="@+id/quick_name_2" style="@style/QuickName" />
+        <TextView android:id="@+id/quick_client_2" style="@style/QuickClient" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/quick_slot_3"
+        style="@style/QuickSlot">
+        <TextView android:id="@+id/quick_name_3" style="@style/QuickName" />
+        <TextView android:id="@+id/quick_client_3" style="@style/QuickClient" />
+    </LinearLayout>
+</LinearLayout>
