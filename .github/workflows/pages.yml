@@ -1,0 +1,54 @@
+name: Publicar site
+
+# Publica a versão web no GitHub Pages a cada push na main.
+# Roda em paralelo com o build do APK: mesmo código, dois destinos.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# O Pages precisa destas duas permissões para receber a publicação.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Uma publicação por vez. Se dois pushes chegarem juntos, o segundo espera
+# em vez de sobrescrever pela metade.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build da versão web
+        run: npm run build:web
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist-web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

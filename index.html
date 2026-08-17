@@ -8,6 +8,28 @@
     />
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#12110E" />
+
+    <link rel="icon" type="image/png" href="./favicon.png" />
+
+    <!--
+      O iOS ignora o manifesto do PWA e lê estas tags. Sem elas, "Adicionar à
+      Tela de Início" cria um ícone com a inicial do site e abre com as barras
+      do Safari em volta.
+
+      As duas versões de "capable" precisam existir: o Chrome deprecou a de
+      prefixo apple, mas o Safari ainda só entende ela.
+    -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ponto" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+
+    <meta
+      name="description"
+      content="Cronômetro de trabalho para freelancers, com relatório em PDF para enviar ao cliente. Funciona offline, sem conta."
+    />
+
     <title>Ponto</title>
   </head>
   <body>
